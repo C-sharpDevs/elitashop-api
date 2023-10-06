@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace ElitaShop.Domain.Entities.Users
 {
-    internal class User : BaseEntity
+    public class User:Auditable
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
