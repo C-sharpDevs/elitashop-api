@@ -2,6 +2,7 @@
 
 namespace ElitaShop.Domain.Entities.Orders
 {
+
     public class OrderItem : Auditable
     {
         public decimal Price { get; set; }

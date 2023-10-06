@@ -1,6 +1,12 @@
-﻿namespace ElitaShop.Domain.Entities.Products
+﻿using ElitaShop.Domain.Entities.Categories;
+
+namespace ElitaShop.Domain.Entities.Products
 {
-    internal class ProductCategory
+    public class ProductCategory : Auditable
     {
+        public long ProductId { get; set; }
+        public Product Product { get; set; }
+        public long CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
