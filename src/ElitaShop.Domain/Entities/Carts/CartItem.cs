@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ElitaShop.Domain.Entities.Carts
 {
+
     public class CartItem : Auditable
     {
         public decimal Price { get; set; }
@@ -20,3 +21,5 @@ namespace ElitaShop.Domain.Entities.Carts
         public Cart Cart { get; set; }
     }
 }
+
+
