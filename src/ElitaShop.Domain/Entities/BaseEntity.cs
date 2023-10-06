@@ -1,4 +1,6 @@
-﻿namespace ElitaShop.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ElitaShop.Domain.Entities
 {
     public class BaseEntity
     {

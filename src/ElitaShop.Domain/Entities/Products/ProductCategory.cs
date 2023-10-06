@@ -1,6 +1,6 @@
 ﻿namespace ElitaShop.Domain.Entities.Products
 {
-    internal class ProductCategory
+    public class ProductCategory
     {
     }
 }
