@@ -1,6 +1,6 @@
 ﻿namespace ElitaShop.Domain.Entities.Orders
 {
-    internal class OrderItem
+    public class OrderItem
     {
     }
 }
