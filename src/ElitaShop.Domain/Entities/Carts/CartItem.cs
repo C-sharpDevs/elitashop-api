@@ -21,3 +21,5 @@ namespace ElitaShop.Domain.Entities.Carts
         public Cart Cart { get; set; }
     }
 }
+
+
