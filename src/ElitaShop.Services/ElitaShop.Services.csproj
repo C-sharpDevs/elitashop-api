@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ElitaShop.DataAccess\ElitaShop.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
