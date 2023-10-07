@@ -5,9 +5,9 @@
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
 
-        public PaginationParams(int pageSiza, int pageNumber)
+        public PaginationParams(int pageSize, int pageNumber)
         {
-            PageSiza = pageSiza;
+            PageSize = pageSiza;
             PageNumber = pageNumber;
         }
 
