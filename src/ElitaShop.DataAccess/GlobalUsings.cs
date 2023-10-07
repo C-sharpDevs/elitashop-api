@@ -1,0 +1,9 @@
+﻿global using ElitaShop.DataAccess.Data;
+global using ElitaShop.DataAccess.Interfaces.EntityRepositories;
+global using ElitaShop.DataAccess.Interfaces.BaseRepositories;
+global using ElitaShop.DataAccess.Repositories.BaseRepositories;
+global using ElitaShop.Domain.Entities.Categories;
+global using ElitaShop.Domain.Entities.Carts;
+global using ElitaShop.Domain.Entities.Products;
+global using ElitaShop.Domain.Entities.Users;
+global using ElitaShop.Domain.Entities.Orders;
