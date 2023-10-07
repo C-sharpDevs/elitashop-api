@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ElitaShop.DataAccess.Paginations;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace ElitaShop.DataAccess.Repositories.BaseRepositories
@@ -46,6 +48,11 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> expression)
         {
             return _entitySet.Where(expression).AsEnumerable();
+        }
+
+        public async Task<IEnumerable<T>> GetPageItemAsync(PaginationParams paginationParams)
+        {
+            return await _entitySet.Skip(paginationParams.GetSkipCount()).Take(paginationParams.PageSize).ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
