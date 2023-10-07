@@ -1,8 +1,4 @@
-﻿using ElitaShop.Domain.Entities.Carts;
-using ElitaShop.Domain.Entities.Orders;
-using ElitaShop.Domain.Entities.Users;
-
-namespace ElitaShop.Domain.Entities.Products
+﻿namespace ElitaShop.Domain.Entities.Products
 {
     public class Product : Auditable
     {
