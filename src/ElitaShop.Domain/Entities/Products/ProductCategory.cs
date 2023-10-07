@@ -1,6 +1,4 @@
-﻿using ElitaShop.Domain.Entities.Categories;
-
-namespace ElitaShop.Domain.Entities.Products
+﻿namespace ElitaShop.Domain.Entities.Products
 {
     public class ProductCategory : Auditable
     {

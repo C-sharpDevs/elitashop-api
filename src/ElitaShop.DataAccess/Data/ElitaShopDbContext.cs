@@ -1,15 +1,7 @@
-﻿using ElitaShop.Domain.Entities.Cards;
-using ElitaShop.Domain.Entities.Carts;
-using ElitaShop.Domain.Entities.Categories;
+﻿using ElitaShop.Domain.Entities.Carts;
 using ElitaShop.Domain.Entities.Orders;
-using ElitaShop.Domain.Entities.Products;
 using ElitaShop.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElitaShop.DataAccess.Data
 {

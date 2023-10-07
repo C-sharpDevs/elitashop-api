@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ElitaShop.Domain.Exceptions.Users
+﻿namespace ElitaShop.Domain.Exceptions.Users
 {
-    internal class UserNotFoundException
+    public class UserNotFoundException
     {
     }
 }

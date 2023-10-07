@@ -1,8 +1,6 @@
-﻿using ElitaShop.Domain.Entities.Carts;
-using ElitaShop.Domain.Entities.Users;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using ElitaShop.Domain.Entities.Users;
 
-namespace ElitaShop.Domain.Entities.Cards
+namespace ElitaShop.Domain.Entities.Carts
 {
     public class Cart : Auditable
     {
