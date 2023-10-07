@@ -4,7 +4,6 @@
     {
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
-        public int PageSiza { get; }
 
         public PaginationParams(int pageSiza, int pageNumber)
         {
