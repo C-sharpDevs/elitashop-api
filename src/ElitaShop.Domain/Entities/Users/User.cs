@@ -1,8 +1,4 @@
-﻿using ElitaShop.Domain.Entities.Cards;
-using ElitaShop.Domain.Entities.Orders;
-using System.Numerics;
-
-namespace ElitaShop.Domain.Entities.Users
+﻿namespace ElitaShop.Domain.Entities.Users
 {
     public class User:Auditable
     {
