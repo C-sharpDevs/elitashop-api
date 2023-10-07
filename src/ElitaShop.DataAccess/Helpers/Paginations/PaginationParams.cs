@@ -7,7 +7,7 @@
 
         public PaginationParams(int pageSize, int pageNumber)
         {
-            PageSize = pageSiza;
+            PageSize = pageSize;
             PageNumber = pageNumber;
         }
 
