@@ -1,6 +1,4 @@
-﻿using ElitaShop.Domain.Entities.Cards;
-using ElitaShop.Domain.Entities.Products;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using ElitaShop.Domain.Entities.Products;
 
 namespace ElitaShop.Domain.Entities.Carts
 {
