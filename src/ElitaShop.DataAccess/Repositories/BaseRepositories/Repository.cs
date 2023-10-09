@@ -50,7 +50,7 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
             return _entitySet.Where(expression).AsEnumerable();
         }
 
-        public async Task<IEnumerable<T>> GetPageItemAsync(PaginationParams paginationParams)
+        public async Task<IEnumerable<T>> GetPageItemsAsync(PaginationParams paginationParams)
         {
             return await _entitySet.Skip(paginationParams.GetSkipCount()).Take(paginationParams.PageSize).ToListAsync();
         }
