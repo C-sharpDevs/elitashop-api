@@ -1,7 +1,4 @@
-﻿using ElitaShop.Domain.Entities.Carts;
-using ElitaShop.Domain.Entities.Orders;
-using ElitaShop.Domain.Entities.Users;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ElitaShop.DataAccess.Data
 {
