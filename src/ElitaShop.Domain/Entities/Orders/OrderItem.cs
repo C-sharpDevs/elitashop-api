@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ElitaShop.Domain.Entities.Orders
+﻿namespace ElitaShop.Domain.Entities.Orders
 {
 
     public class OrderItem : Auditable
@@ -12,5 +10,9 @@ namespace ElitaShop.Domain.Entities.Orders
         [ForeignKey(nameof(Order))]
         public long OrderId { get; set; }
         public Order Order { get; set; }
+
+        [ForeignKey(nameof(Product))]
+        public long ProductId { get; set; }
+        public Product Product { get; set; }
     }
 }

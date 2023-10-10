@@ -1,7 +1,4 @@
-﻿using ElitaShop.Domain.Entities.Enums;
-using ElitaShop.Domain.Enums;
-
-namespace ElitaShop.Services.Dtos.Carts
+﻿namespace ElitaShop.Services.Dtos.Carts
 {
     public class CartCreateDto
     {

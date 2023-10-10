@@ -1,8 +1,6 @@
-﻿using ElitaShop.Domain.Enums;
-
-namespace ElitaShop.Services.Dtos.Carts
+﻿namespace ElitaShop.Services.Dtos.Carts
 {
-    public class CartUpdateDto 
+    public class CartUpdateDto
     {
         public string FirstName { get; set; } = string.Empty;
 
