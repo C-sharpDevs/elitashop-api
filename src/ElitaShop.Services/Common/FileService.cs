@@ -19,7 +19,7 @@ namespace ElitaShop.Services.Common
 
         public async Task<bool> DeleteAvatarAsync(string file)
         {
-            return await DeleteAvatarAsync(file);
+            return await DeleteImageAsync(file);
         }
 
         public async Task<bool> DeleteImageAsync(string file)
