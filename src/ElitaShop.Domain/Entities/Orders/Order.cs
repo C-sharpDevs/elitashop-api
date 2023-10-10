@@ -1,11 +1,8 @@
-﻿using ElitaShop.Domain.Entities.Users;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace ElitaShop.Domain.Entities.Orders
+﻿namespace ElitaShop.Domain.Entities.Orders
 {
     public class Order : Auditable
     {
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
         public decimal SubTotal { get; set; }
         public decimal ItemDiscount { get; set; }
         public decimal? Shipping { get; set; }
