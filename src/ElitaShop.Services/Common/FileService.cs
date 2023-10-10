@@ -15,7 +15,6 @@ namespace ElitaShop.Services.Common
         public FileService()
         {
             ROOTPATH = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            Directory.GetDirectoryRoot("");
         }
 
         public async Task<bool> DeleteAvatarAsync(string file)
