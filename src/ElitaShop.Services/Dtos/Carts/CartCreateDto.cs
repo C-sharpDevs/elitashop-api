@@ -1,5 +1,4 @@
-﻿using ElitaShop.Domain.Entities.Enums;
-using ElitaShop.Domain.Enums;
+﻿using ElitaShop.Domain.Enums;
 
 namespace ElitaShop.Services.Dtos.Carts
 {
@@ -16,13 +15,13 @@ namespace ElitaShop.Services.Dtos.Carts
         public string Email { get; set; } = string.Empty;
         
         public string SessionId { get; set; } = string.Empty;
-        
+
         public CartStatus Status { get; set; }
-        
+
         public string Address1 { get; set; } = string.Empty;
-        
+
         public string Address2 { get; set; } = string.Empty;
-        
+   
         public string City { get; set; } = string.Empty;
         
         public string Province { get; set; } = string.Empty;
