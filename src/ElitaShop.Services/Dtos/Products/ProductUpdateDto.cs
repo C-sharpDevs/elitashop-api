@@ -24,6 +24,6 @@ namespace ElitaShop.Services.Dtos.Products
 
         public DateTime? EndAt { get; set; }
 
-        public IFormFile ProductImage { get; set; } = default!;
+        public IFormFile? ProductImage { get; set; };
     }
 }
