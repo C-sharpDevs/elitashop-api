@@ -8,7 +8,7 @@
 
             string[] ImageExtension = GetImageExtensions();
 
-            if(ImageExtension.Any(x => x == fileInfo.Extension))
+            if (ImageExtension.Any(x => x == fileInfo.Extension))
             {
                 string extension = fileInfo.Extension;
                 string name = "IMG_" + Guid.NewGuid() + extension;
