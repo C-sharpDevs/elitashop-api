@@ -1,4 +1,6 @@
-﻿namespace ElitaShop.Domain.Entities.Users
+﻿using ElitaShop.Domain.Entities.Carts;
+
+namespace ElitaShop.Domain.Entities.Users
 {
     public class User:Auditable
     {
