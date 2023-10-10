@@ -1,4 +1,4 @@
-﻿namespace ElitaShop.Domain.Entities.Enums
+﻿namespace ElitaShop.Domain.Enums
 {
     public enum OrderStatus
     {
