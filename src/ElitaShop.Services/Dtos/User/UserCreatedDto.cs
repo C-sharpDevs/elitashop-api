@@ -1,7 +1,4 @@
-﻿using ElitaShop.Domain.Entities.Carts;
-using ElitaShop.Domain.Entities.Orders;
-
-namespace ElitaShop.Services.Dtos.User
+﻿namespace ElitaShop.Services.Dtos.User
 {
     public class UserCreatedDto
     {
