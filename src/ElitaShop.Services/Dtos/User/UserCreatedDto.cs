@@ -9,6 +9,6 @@
         public string Email { get; set; }
         public string Password { get; set; }
         public string? Intro { get; set; }
-        public string? UserImage { get; set; }
+        public IFormFile UserAvatar { get; set; } = default!;
     }
 }

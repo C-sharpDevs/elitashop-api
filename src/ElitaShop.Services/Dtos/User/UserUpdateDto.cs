@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ElitaShop.Services.Dtos.User
+﻿namespace ElitaShop.Services.Dtos.User
 {
     public class UserUpdateDto
     {
@@ -15,6 +9,6 @@ namespace ElitaShop.Services.Dtos.User
         public string Email { get; set; }
         public string Password { get; set; }
         public string? Intro { get; set; }
-        public string? UserImage { get; set; }
+        public IFormFile UserAvatar { get; set; } = default!;
     }
 }
