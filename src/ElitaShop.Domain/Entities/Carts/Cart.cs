@@ -1,4 +1,5 @@
 ﻿using ElitaShop.Domain.Entities.Users;
+using ElitaShop.Domain.Enums;
 
 namespace ElitaShop.Domain.Entities.Carts
 {
@@ -9,8 +10,8 @@ namespace ElitaShop.Domain.Entities.Carts
         public string MiddleName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public string SessionId { get; set; }
-        public string Status { get; set; }
+        public string SessionId { get; set; }    
+        public CartStatus Status { get; set; } 
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }
