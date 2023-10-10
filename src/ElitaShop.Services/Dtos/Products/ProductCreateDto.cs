@@ -1,4 +1,6 @@
-﻿namespace ElitaShop.Services.Dtos.Products
+﻿using Microsoft.AspNetCore.Http;
+
+namespace ElitaShop.Services.Dtos.Products
 {
     public class ProductCreateDto
     {
@@ -13,6 +15,6 @@
         public DateTime? PublishedAt { get; set; }
         public DateTime? StartAt { get; set; }
         public DateTime? EndAt { get; set; }
-        public string? ProductImage { get; set; }
+        public IFormFile ProductImage { get; set; } = default!;
     }
 }
