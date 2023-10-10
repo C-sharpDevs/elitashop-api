@@ -1,5 +1,3 @@
-﻿using ElitaShop.Domain.Enums;
-
 namespace ElitaShop.Services.Dtos.Carts
 {
     public class CartCreateDto

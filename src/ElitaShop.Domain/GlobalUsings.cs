@@ -4,3 +4,4 @@ global using ElitaShop.Domain.Entities.Carts;
 global using ElitaShop.Domain.Entities.Orders;
 global using ElitaShop.Domain.Entities.Users;
 global using ElitaShop.Domain.Entities.Categories;
+global using ElitaShop.Domain.Enums;
