@@ -12,5 +12,5 @@ public interface IProductService
 
     // Get
     Task<IList<Product>> GetAllAsync(PaginationParams @params);
-    Task<Product> GetById(long productId);
+    Task<Product> GetByIdAsync(long productId);
 }
