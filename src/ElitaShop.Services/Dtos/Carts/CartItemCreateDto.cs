@@ -8,6 +8,6 @@
         
         public int Quantity { get; set; }
         
-        public string Content { get; set; } = string.Empty;
+        public string? Content { get; set; }
     }
 }
