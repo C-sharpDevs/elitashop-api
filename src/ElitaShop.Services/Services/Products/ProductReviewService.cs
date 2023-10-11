@@ -9,8 +9,8 @@ namespace ElitaShop.Services.Services.Products
         private readonly IProductReviewRepository _productReviewRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        public ProductReviewService(IProductReviewRepository productReviewRepository, 
-            IMapper mapper, 
+        public ProductReviewService(IProductReviewRepository productReviewRepository,
+            IMapper mapper,
             IUnitOfWork unitOfWork)
         {
             _productReviewRepository = productReviewRepository;
@@ -22,23 +22,20 @@ namespace ElitaShop.Services.Services.Products
             ProductReview productReview = _mapper.Map<ProductReview>(productReviewCreateDto);
             await _productReviewRepository.AddAsync(productReview);
             int result = await _unitOfWork.CommitAsync();
-            if (result != 0)
-                return true;
-            return false;
-            
-            
+            return result != 0;
         }
 
         public async Task<bool> DeleteAsync(long productReviewId)
         {
-            ProductReview productReview = await _productReviewRepository.GetAsync(productReview =>  productReview.ProductId == productReviewId);
-            if (productReview != null)
-            {
-                _productReviewRepository.Remove(productReview);
-                await _unitOfWork.CommitAsync();
-            }
+            ProductReview productReview = await _productReviewRepository.GetAsync(productReview => productReview.ProductId == productReviewId);
+            if (productReview == null)
+                throw new ProductReviewNotFoundException();
+
+            _productReviewRepository.Remove(productReview);
+            await _unitOfWork.CommitAsync();
+
             return true;
-            
+
         }
 
         public async Task<IList<ProductReview>> GetAllAsync(PaginationParams @params)
@@ -57,18 +54,19 @@ namespace ElitaShop.Services.Services.Products
         public async Task<bool> UpdateAsync(long productReviewId, ProductReviewUpdateDto productReviewUpdateDto)
         {
             ProductReview productReview = await _productReviewRepository.GetAsync(productReview => productReview.ProductId == productReviewId);
-            if (productReview != null)
-            {
-                ProductReview productReview1 = _mapper.Map<ProductReview>(productReviewUpdateDto);
-                _productReviewRepository.Update(productReview1);
-                await _unitOfWork.CommitAsync();
-            }
+            if (productReview == null)
+                throw new ProductReviewNotFoundException();
+
+            ProductReview productReview1 = _mapper.Map<ProductReview>(productReviewUpdateDto);
+            _productReviewRepository.Update(productReview1);
+            await _unitOfWork.CommitAsync();
+
             return true;
 
 
 
         }
 
-        
+
     }
 }
