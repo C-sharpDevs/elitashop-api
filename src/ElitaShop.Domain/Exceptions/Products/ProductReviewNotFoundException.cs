@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElitaShop.Services.Services.Products
+namespace ElitaShop.Domain.Exceptions.Products
 {
     public class ProductReviewNotFoundException : NotFoundException
     {
-        public ProductReviewNotFoundException() 
+        public ProductReviewNotFoundException()
         {
-            this.TitleMessage = "ProductReview not found !";
+            TitleMessage = "ProductReview not found !";
         }
 
     }
