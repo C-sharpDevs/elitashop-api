@@ -1,4 +1,5 @@
 ﻿using ElitaShop.DataAccess.Repositories.EntityRepositories;
+using System.Diagnostics;
 
 namespace ElitaShop.DataAccess.Repositories.BaseRepositories
 {
@@ -60,14 +61,16 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
             }
         }
 
-        public void Commit()
+        public int Commit()
         {
-            _dbContext.SaveChanges();
+            int result = _dbContext.SaveChanges();
+            return result;
         }
 
-        public async Task CommitAsync(CancellationToken cancellationToken = default)
+        public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
         {
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            int result = await _dbContext.SaveChangesAsync(cancellationToken);
+            return result;
         }
 
         public void Rollback()
