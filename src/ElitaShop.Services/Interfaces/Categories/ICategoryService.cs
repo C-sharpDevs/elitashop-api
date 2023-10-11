@@ -6,12 +6,12 @@ namespace ElitaShop.Services.Interfaces.Categories
     {
         Task<bool> CreateAsync(CategoryCreateDto categoryCreateDto);
         
-        Task<bool> UpdateAsync(CategoryUpdateDto categoryUpdateDto);
+        Task<bool> UpdateAsync(long categoryId, CategoryUpdateDto categoryUpdateDto);
         
         Task<bool> DeleteAsync(long categoryId);
         
         Task<Category> GetByIdAsync(long categoryId);
         
-        Task<Category> GetAllAsync(PaginationParams @params);
+        Task<IList<Category>> GetAllAsync(PaginationParams @params);
     }
 }
