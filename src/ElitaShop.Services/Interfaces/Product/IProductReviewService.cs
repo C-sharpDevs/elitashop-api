@@ -8,16 +8,16 @@ namespace ElitaShop.Services.Interfaces.Product
         Task<bool> CreateAsync(ProductReviewCreateDto productReviewCreateDto);
 
         //Update
-        Task<bool> UpdateAsync(long productReviewsId, ProductReviewUpdateDto productReviewUpdateDto);
+        Task<bool> UpdateAsync(long productReviewId, ProductReviewUpdateDto productReviewUpdateDto);
 
         //Delete
-        Task<bool> DeleteAsync(long productReviewsId);
+        Task<bool> DeleteAsync(long productReviewId);
 
         //Get
         Task<IList<ProductReview>> GetAllAsync(PaginationParams @params);
 
         //GetById
-        Task<ProductReview> GetByIdAsync(long productReviewsId);
+        Task<ProductReview> GetByIdAsync(long productReviewId);
 
 
 
