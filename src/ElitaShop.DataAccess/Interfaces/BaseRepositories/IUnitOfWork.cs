@@ -9,9 +9,9 @@
         IOrderRepository OrderRepository { get; }
         IUserRepository UserRepository { get; }
 
-        void Commit();
+        int Commit();
         void Rollback();
-        Task CommitAsync(CancellationToken cancellationToken = default);
+        Task<int> CommitAsync(CancellationToken cancellationToken = default);
         Task RollbackAsync(CancellationToken cancellationToken = default);
     }
 }
