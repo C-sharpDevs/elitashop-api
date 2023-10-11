@@ -14,7 +14,7 @@ namespace ElitaShop.Services.Dtos.Carts
         
         public string SessionId { get; set; } = string.Empty;
 
-        public CartStatus Status { get; set; }
+        public CartStatus Status { get; set; }          
 
         public string Address1 { get; set; } = string.Empty;
 
