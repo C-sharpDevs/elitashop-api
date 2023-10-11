@@ -1,6 +1,7 @@
 ﻿using ElitaShop.Services.Interfaces.Common;
-using Microsoft.AspNetCore.Http;
 using ElitaShop.Services.Services.Common.Helpers;
+using ElitaShop.Services.Common.Helpers;
+using ElitaShop.Services.Common.Helpers;
 
 namespace ElitaShop.Services.Services.Common
 {
