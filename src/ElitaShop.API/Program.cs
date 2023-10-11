@@ -1,6 +1,5 @@
 using ElitaShop.Services.Common;
 using ElitaShop.Services.Common.AutoMapper;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
