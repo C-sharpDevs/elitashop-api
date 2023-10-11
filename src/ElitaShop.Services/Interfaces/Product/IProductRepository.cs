@@ -1,6 +1,4 @@
-﻿using ElitaShop.DataAccess.Paginations;
-
-public interface IProductService
+﻿public interface IProductService
 {
     // Append
     Task<bool> CreateAsync(ProductCreateDto productCreateDto);

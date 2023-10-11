@@ -1,6 +1,4 @@
-﻿using ElitaShop.DataAccess.Paginations;
-
-public interface IProductCategoryService
+﻿public interface IProductCategoryService
 {
     // Append
     Task<bool> AddProductToCategoryAsync(long productId, long categoryId);

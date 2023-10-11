@@ -1,6 +1,4 @@
-﻿using ElitaShop.DataAccess.Paginations;
-
-namespace ElitaShop.Services.Interfaces.Product
+﻿namespace ElitaShop.Services.Interfaces.Product
 {
     public interface IProductReviewService
     {
