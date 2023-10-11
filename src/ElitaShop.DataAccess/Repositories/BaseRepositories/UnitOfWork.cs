@@ -15,7 +15,7 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
         private ICartRepository _cartRepository;
         private ICategoryRepository _categoryRepository;
         private IOrderRepository _orderRepository;
-        private IProductRepository _productRepository;
+        public IProductRepository _productRepository;
         private IProductReviewRepository _productReviewRepository;
         private IUserRepository _userRepository;
 
