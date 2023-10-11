@@ -1,4 +1,4 @@
-﻿namespace ElitaShop.Services.Common.Helpers
+﻿namespace ElitaShop.Services.Services.Common.Helpers
 {
     public class MediaHelper
     {
