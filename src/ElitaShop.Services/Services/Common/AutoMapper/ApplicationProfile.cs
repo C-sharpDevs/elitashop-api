@@ -1,4 +1,4 @@
-﻿namespace ElitaShop.Services.Common.AutoMapper
+﻿namespace ElitaShop.Services.Services.Common.AutoMapper
 {
     public class ApplicationProfile : Profile
     {
