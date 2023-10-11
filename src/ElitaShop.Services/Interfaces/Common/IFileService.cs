@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace ElitaShop.Services.Interfaces.Common
+﻿namespace ElitaShop.Services.Interfaces.Common
 {
     public interface IFileService
     {
