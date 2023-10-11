@@ -1,8 +1,7 @@
 ﻿using ElitaShop.Services.Interfaces.Common;
-using Microsoft.AspNetCore.Http;
-using ElitaShop.Services.Common.Helpers;
+using ElitaShop.Services.Services.Common.Helpers;
 
-namespace ElitaShop.Services.Common
+namespace ElitaShop.Services.Services.Common
 {
     public class FileService : IFileService
     {
@@ -33,7 +32,7 @@ namespace ElitaShop.Services.Common
                 return true;
             }
             return false;
-            
+
         }
 
         public async Task<string> UploadAvatarAsync(IFormFile file)
@@ -42,7 +41,7 @@ namespace ElitaShop.Services.Common
             string subPath = Path.Combine(MEDIA, AVATARS, newAvatarName);
             string path = Path.Combine(ROOTPATH, subPath);
 
-            using(var stream = new FileStream(path, FileMode.Open))
+            using (var stream = new FileStream(path, FileMode.Open))
             {
                 await file.CopyToAsync(stream);
                 return subPath;
