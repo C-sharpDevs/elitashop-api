@@ -4,7 +4,7 @@
     {
         public ImageNotFoundException()
         {
-            this.TitleMessage = "Category not found !";
+            this.TitleMessage = "Image not found !";
         }
     }
 }
