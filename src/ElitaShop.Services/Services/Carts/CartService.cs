@@ -1,26 +1,28 @@
 ﻿using ElitaShop.DataAccess.Interfaces.BaseRepositories;
 using ElitaShop.DataAccess.Interfaces.EntityRepositories;
-using ElitaShop.DataAccess.Repositories.BaseRepositories;
-using ElitaShop.Domain.Entities.Carts;
-using ElitaShop.Services.Dtos.Carts;
 using ElitaShop.Services.Interfaces.Carts;
 
 namespace ElitaShop.Services.Services.Carts
 {
     public class CartService : ICartService
     {
+        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICartRepository _cartRepository;
 
-        public CartService(IUnitOfWork unitOfWork)
+        public CartService(IUnitOfWork unitOfWork, IMapper mapper)
         {
+            _mapper = mapper;
             _unitOfWork = unitOfWork;
             _cartRepository = _unitOfWork.CartRepository;
         }
 
-        public Task CreateAsync(CartCreateDto cartCreateDto)
+        public async Task CreateAsync(CartCreateDto cartCreateDto)
         {
-            var cart =
+            var cart = _mapper.Map<Cart>(cartCreateDto);
+            //cart.Id = Random.Shared.Next();
+            await _cartRepository.AddAsync(cart);
+            await _unitOfWork.CommitAsync();
         }
 
         public Task DeleteAsync()
