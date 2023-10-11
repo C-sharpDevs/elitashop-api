@@ -12,7 +12,6 @@ namespace ElitaShop.Domain.Entities.Users
         public string Password { get; set; }
         public bool Admin { get; set; }
         public bool Vendor {get; set; }
-        public DateTime RegistiredAt { get; set; } = DateTime.UtcNow;
         public DateTime LastLogin { get; set; } = DateTime.UtcNow;
         public string? Intro { get; set; }
         public string? UserImage { get; set; }
