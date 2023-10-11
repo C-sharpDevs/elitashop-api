@@ -7,6 +7,7 @@ using ElitaShop.Services.Services.Common.AutoMapper;
 using ElitaShop.Services.Services.Products;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
