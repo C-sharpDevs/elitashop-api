@@ -1,5 +1,5 @@
-using ElitaShop.Services.Common;
-using ElitaShop.Services.Common.AutoMapper;
+using ElitaShop.Services.Services.Common;
+using ElitaShop.Services.Services.Common.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
