@@ -5,10 +5,10 @@ namespace ElitaShop.Services.Interfaces.Carts
 {
     public interface ICartService
     {
-        Task CreateAsync(CartCreateDto cartCreateDto);
+        Task<bool> CreateAsync(CartCreateDto cartCreateDto);
         Task<Cart> GetCartByIdAsync(long id);
-        Task UpdateAsync(CartUpdateDto cartUpdateDto);
-        Task DeleteAsync();
+        Task<bool> UpdateAsync(CartUpdateDto cartUpdateDto);
+        Task<bool> DeleteAsync();
         Task<List<Cart>> GetAllAsync();
     }
 }
