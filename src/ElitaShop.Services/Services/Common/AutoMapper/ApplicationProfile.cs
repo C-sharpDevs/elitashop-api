@@ -13,7 +13,7 @@
             CreateMap<CartItemUpdateDto, Cart>();
 
             // Category
-            CreateMap<CategoryCreatedDto, Category>();
+            CreateMap<CategoryCreateDto, Category>();
             CreateMap<CategoryUpdateDto, Category>();
 
             // Order
