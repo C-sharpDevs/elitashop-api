@@ -1,4 +1,5 @@
 ﻿using ElitaShop.DataAccess.Paginations;
+
 public interface IProductService
 {
     // Append
