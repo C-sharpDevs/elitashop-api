@@ -16,10 +16,5 @@
 
         //GetById
         Task<ProductReview> GetByIdAsync(long productReviewId);
-
-
-
-
-
     }
 }
