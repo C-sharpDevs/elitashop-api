@@ -1,15 +1,27 @@
+using ElitaShop.DataAccess.Data;
+using ElitaShop.DataAccess.Interfaces.BaseRepositories;
+using ElitaShop.DataAccess.Repositories.BaseRepositories;
+using ElitaShop.Services.Interfaces.Common;
 using ElitaShop.Services.Services.Common;
 using ElitaShop.Services.Services.Common.AutoMapper;
+using ElitaShop.Services.Services.Products;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-FileService fileService = new FileService();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(ApplicationProfile));
+builder.Services.AddDbContext<ElitaShopDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
