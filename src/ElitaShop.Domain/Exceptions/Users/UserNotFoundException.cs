@@ -1,6 +1,10 @@
 ﻿namespace ElitaShop.Domain.Exceptions.Users
 {
-    public class UserNotFoundException
+    public class UserNotFoundException : NotFoundException
     {
+        public UserNotFoundException() 
+        {
+            this.TitleMessage = "User not found !";
+        }
     }
 }
