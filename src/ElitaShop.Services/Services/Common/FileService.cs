@@ -1,7 +1,8 @@
-﻿using ElitaShop.Services.Common.Helpers;
-using ElitaShop.Services.Interfaces.Common;
+﻿using ElitaShop.Services.Interfaces.Common;
+using Microsoft.AspNetCore.Http;
+using ElitaShop.Services.Common.Helpers;
 
-namespace ElitaShop.Services.Common
+namespace ElitaShop.Services.Services.Common
 {
     public class FileService : IFileService
     {

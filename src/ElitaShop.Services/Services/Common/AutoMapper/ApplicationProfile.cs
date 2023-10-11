@@ -1,4 +1,4 @@
-﻿namespace ElitaShop.Services.Common.AutoMapper
+﻿namespace ElitaShop.Services.Services.Common.AutoMapper
 {
     public class ApplicationProfile : Profile
     {
@@ -13,7 +13,7 @@
             CreateMap<CartItemUpdateDto, Cart>();
 
             // Category
-            CreateMap<CategoryCreatedDto, Category>();
+            CreateMap<CategoryCreateDto, Category>();
             CreateMap<CategoryUpdateDto, Category>();
 
             // Order
