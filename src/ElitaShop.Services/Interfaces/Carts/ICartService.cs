@@ -1,6 +1,4 @@
-﻿using ElitaShop.Domain.Entities.Carts;
-using ElitaShop.Services.Dtos.Carts;
-
+﻿
 namespace ElitaShop.Services.Interfaces.Carts
 {
     public interface ICartService
@@ -10,5 +8,6 @@ namespace ElitaShop.Services.Interfaces.Carts
         Task<bool> UpdateAsync(long cartId, CartUpdateDto cartUpdateDto);
         Task<bool> DeleteAsync(long cartId);
         Task<List<Cart>> GetAllAsync();
+        Task<List<Cart>> GetPageItemsAsync(PaginationParams @params);
     }
 }
