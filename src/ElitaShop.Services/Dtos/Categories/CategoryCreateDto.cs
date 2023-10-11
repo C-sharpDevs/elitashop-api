@@ -1,6 +1,6 @@
 ﻿namespace ElitaShop.Services.Dtos.Categories
 {
-    public class CategoryCreatedDto
+    public class CategoryCreateDto
     {
         public string Title { get; set; }
         public string MetaTitle { get; set; }
