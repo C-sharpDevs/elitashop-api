@@ -2,7 +2,7 @@
 {
     public interface ICartService
     {
-        Task<bool> CreateAsync(CartCreateDto cartCreateDto);
+        Task<bool> CreateAsync(long userId, CartCreateDto cartCreateDto);
         Task<bool> UpdateAsync(long cartId, CartUpdateDto cartUpdateDto);
         Task<bool> DeleteAsync(long cartId);
         Task<Cart> GetCartByIdAsync(long cartId);

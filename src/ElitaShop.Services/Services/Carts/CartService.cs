@@ -18,9 +18,10 @@ namespace ElitaShop.Services.Services.Carts
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<bool> CreateAsync(CartCreateDto cartCreateDto)
+        public async Task<bool> CreateAsync(long userId, CartCreateDto cartCreateDto)
         {
             var cart = _mapper.Map<Cart>(cartCreateDto);
+            cart.UserId = userId;
             await _cartRepository.AddAsync(cart);
             var result = await _unitOfWork.CommitAsync();
            
@@ -69,10 +70,12 @@ namespace ElitaShop.Services.Services.Carts
             {
                 throw new CartNotFoundException();
             }
-            var newCart = _mapper.Map<Cart>(cartUpdateDto);
-            newCart.Id = cartId;
-
-            _cartRepository.Update(newCart);
+            Cart newcart = _mapper.Map<Cart>(cartUpdateDto);
+            newcart.Id = cartId;
+            newcart.UserId = cart.UserId;
+            newcart.UpdatedAt = DateTime.UtcNow;
+            newcart.CreatedAt = cart.CreatedAt;
+            _cartRepository.Update(newcart);
             var result = await _unitOfWork.CommitAsync();
             return result > 0;
 
