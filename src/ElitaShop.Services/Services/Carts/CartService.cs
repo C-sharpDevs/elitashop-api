@@ -8,34 +8,37 @@ namespace ElitaShop.Services.Services.Carts
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICartRepository _cartRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CartService(IUnitOfWork unitOfWork, IMapper mapper)
+        public CartService(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _cartRepository = _unitOfWork.CartRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> CreateAsync(CartCreateDto cartCreateDto)
         {
             var cart = _mapper.Map<Cart>(cartCreateDto);
-            
             await _cartRepository.AddAsync(cart);
-            await _unitOfWork.CommitAsync();
-
-            return true;
+            var result = await _unitOfWork.CommitAsync();
+           
+            if(result>0)
+            {
+                _httpContextAccessor.HttpContext.Response.Headers["cartId"] = cart.Id.ToString();
+                return true;
+            }
+            return false;
         }
 
         public async Task<bool> DeleteAsync(long cartId)
         {
-            var cart = _cartRepository.Get(x=> x.Id ==cartId);
-            if(cart == null)
-            {
-                throw new CartNotFoundException();
-            }
+            var cart = await GetCartByIdAsync(cartId);
             _cartRepository.Remove(cart);
-            await _unitOfWork.CommitAsync();
-            return true;
+            var result = await _unitOfWork.CommitAsync();
+
+            return result > 0;
         }
 
         public async Task<List<Cart>> GetAllAsync()
@@ -68,9 +71,10 @@ namespace ElitaShop.Services.Services.Carts
             }
             var newCart = _mapper.Map<Cart>(cartUpdateDto);
             newCart.Id = cartId;
+
             _cartRepository.Update(newCart);
-            await _unitOfWork.CommitAsync();
-            return true;
+            var result = await _unitOfWork.CommitAsync();
+            return result > 0;
 
         }
     }
