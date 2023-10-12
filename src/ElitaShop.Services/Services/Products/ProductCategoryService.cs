@@ -1,4 +1,5 @@
 ﻿using ElitaShop.Domain.Exceptions.Categories;
+using ElitaShop.Services.Interfaces.Products;
 
 namespace ElitaShop.Services.Services.Products
 {
