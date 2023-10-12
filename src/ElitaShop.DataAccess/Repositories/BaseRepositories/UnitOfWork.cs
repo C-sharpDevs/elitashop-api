@@ -18,6 +18,7 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
         public IProductRepository _productRepository;
         private IProductReviewRepository _productReviewRepository;
         private IUserRepository _userRepository;
+        private ICartItemRepository _cartItemRepository;
 
         public ICartRepository CartRepository 
         {
@@ -58,6 +59,13 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
             get
             {
                 return _userRepository ??= new UserRepository(_dbContext);
+            }
+        }
+        public ICartItemRepository CartItemRepository
+        {
+            get
+            {
+                return _cartItemRepository ??= new CartItemRepository(_dbContext);
             }
         }
 
