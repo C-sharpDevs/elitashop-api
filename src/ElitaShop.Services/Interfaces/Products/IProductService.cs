@@ -10,6 +10,6 @@
     Task<bool> DeleteAsync(long productId);
 
     // Get
-    Task<IList<Product>> GetAllAsync(PaginationParams @params);
+    Task<IEnumerable<Product>> GetAllAsync(PaginationParams @params);
     Task<Product> GetByIdAsync(long productId);
 }

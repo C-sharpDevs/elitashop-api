@@ -1,6 +1,4 @@
-﻿using ElitaShop.DataAccess.Interfaces.BaseRepositories;
-using ElitaShop.DataAccess.Interfaces.EntityRepositories;
-using ElitaShop.Domain.Exceptions.Carts;
+﻿using ElitaShop.Domain.Exceptions.Carts;
 using ElitaShop.Services.Interfaces.Carts;
 
 namespace ElitaShop.Services.Services.Carts
@@ -53,6 +51,12 @@ namespace ElitaShop.Services.Services.Carts
                 throw new CartNotFoundException();
             }
             return cart;
+        }
+
+        public async Task<List<Cart>> GetPageItemsAsync(PaginationParams @params)
+        {
+            var result = await _cartRepository.GetPageItemsAsync(@params);
+            return (List<Cart>)result;
         }
 
         public async Task<bool> UpdateAsync(long cartId, CartUpdateDto cartUpdateDto)
