@@ -9,7 +9,7 @@
     Task<bool> DeleteRangeAsync(List<long> productIds, long categoryId);
 
     // Get
-    Task<IList<Product>> GetAllProductsInTheCategoryAsync(long categoryId, PaginationParams @params);
+    Task<IEnumerable<Product>> GetAllProductsInTheCategoryAsync(long categoryId, PaginationParams @params);
 
     //Update
     Task<bool> UpdateProductCategoryAsync(long productId, long oldCategoryId, long newCategoryId);
