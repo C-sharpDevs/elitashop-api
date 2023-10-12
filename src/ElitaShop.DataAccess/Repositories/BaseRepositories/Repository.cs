@@ -1,6 +1,5 @@
 ﻿using ElitaShop.DataAccess.Paginations;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace ElitaShop.DataAccess.Repositories.BaseRepositories
@@ -83,6 +82,8 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
         public void Update(T entity)
         {
             _entitySet.Update(entity);
+            //_dbContext.Entry(entity).State = EntityState.Modified;
+            
         }
 
         public void UpdateRange(IEnumerable<T> entities)
