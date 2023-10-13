@@ -71,10 +71,8 @@ namespace ElitaShop.Services.Services.Carts
                 throw new CartNotFoundException();
             }
             Cart newcart = _mapper.Map<Cart>(cartUpdateDto);
-            newcart.Id = cartId;
-            newcart.UserId = cart.UserId;
+            newcart = _mapper.Map<Cart>(cart);
             newcart.UpdatedAt = DateTime.UtcNow;
-            newcart.CreatedAt = cart.CreatedAt;
             _cartRepository.Update(newcart);
             var result = await _unitOfWork.CommitAsync();
             return result > 0;
