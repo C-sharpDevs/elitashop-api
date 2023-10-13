@@ -8,7 +8,7 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
     public class Repository<T> : IRepository<T> where T : class
     {
         protected readonly ElitaShopDbContext _dbContext;
-        private DbSet<T> _entitySet;
+        protected DbSet<T> _entitySet;
         public Repository(ElitaShopDbContext elitaShopDbContext)
         {
             _dbContext = elitaShopDbContext;

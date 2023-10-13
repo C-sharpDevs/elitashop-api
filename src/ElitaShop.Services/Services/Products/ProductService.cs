@@ -72,32 +72,48 @@
 
         public async Task<bool> UpdateAsync(long productId, ProductUpdateDto productUpdateDto)
         {
-
-
             Product? resultProduct = await _productRepository.GetAsync(product => product.Id == productId);
 
             if (resultProduct == null) throw new ProductNotFoundException();
 
-            bool imageResult = await _fileService.DeleteImageAsync($"{resultProduct.ProductImage}");
+            bool imageResult = await _fileService.DeleteImageAsync(resultProduct.ProductImage);
             if (imageResult == false) throw new ImageNotFoundException();
 
             string imagepath = await _fileService.UploadImageAsync(productUpdateDto.ProductImage);
 
+            resultProduct.UserId = productUpdateDto.UserId;
+            resultProduct.Title = productUpdateDto.Title;
+            resultProduct.Description = productUpdateDto.Description;
+            resultProduct.MetaTitle = productUpdateDto.MetaTitle;
+            resultProduct.Price = productUpdateDto.Price;
+            resultProduct.Discount = productUpdateDto.Discount;
+            resultProduct.Quantity = productUpdateDto.Quantity;
+            resultProduct.ProductImage = imagepath;
+            resultProduct.UpdatedAt = DateTime.UtcNow;
 
-            var product = _mapper.Map<Product>(productUpdateDto);
-            product.Id = resultProduct.Id;
-            product.ProductImage = imagepath;
+            _productRepository.Update(resultProduct);
+            int res = await _unitOfWork.CommitAsync();
 
-            product.UpdatedAt = DateTime.UtcNow;
-            product.CreatedAt = resultProduct.CreatedAt;
-            product.PublishedAt = resultProduct.PublishedAt;
-            product.StartAt = resultProduct.StartAt;
-
-            _productRepository.Remove(resultProduct);
-            _productRepository.Add(product);
-            await _unitOfWork.CommitAsync();
-            return true;
+            return res > 0;
         }
+
+        public async Task<bool> UpdateImageAsync(long productId, IFormFile productImage)
+        {
+            Product? resultProduct = await _productRepository.GetAsync(product => product.Id == productId);
+
+            if (resultProduct == null) throw new ProductNotFoundException();
+
+            bool imageResult = await _fileService.DeleteImageAsync(resultProduct.ProductImage);
+
+            if (imageResult == false) throw new ImageNotFoundException();
+
+            resultProduct.ProductImage = await _fileService.UploadImageAsync(productImage);
+
+            int result = await _unitOfWork.CommitAsync();
+
+            return result > 0;
+        }
+
 
         //public async Task<IEnumerable<Product>> GetAllAsync(PaginationParams @params)
         //{
@@ -105,11 +121,11 @@
 
         //    return products;
         //}
-        public async Task<IEnumerable<Product>> GetAllAsync()
+        public async Task<List<Product>> GetAllAsync()
         {
             IEnumerable<Product>? products = await _productRepository.GetAllAsync();
 
-            return products;
+            return products.ToList();
         }
 
         public async Task<Product> GetByIdAsync(long productId)

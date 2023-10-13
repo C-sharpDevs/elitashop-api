@@ -60,5 +60,15 @@ namespace ElitaShop.API.Controllers
                 return Ok(product);
             return BadRequest("Product Not Found");
         }
+
+        [HttpPatch]
+        public async Task<IActionResult> UpdateProductImage([FromForm] long productId, IFormFile productImage)
+        {
+            bool result = await _productService.UpdateImageAsync(productId,productImage);
+
+            if (result)
+                return Ok("Sucesfully Updated");
+            return BadRequest("Do Not Updated");
+        }
     }
 }
