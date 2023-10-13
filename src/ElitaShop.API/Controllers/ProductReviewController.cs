@@ -1,4 +1,5 @@
 ﻿using ElitaShop.DataAccess.Paginations;
+using ElitaShop.Domain.Entities.Products;
 using ElitaShop.Domain.Exceptions.Products;
 using ElitaShop.Services.Dtos.Products;
 using ElitaShop.Services.Interfaces.Product;
@@ -27,34 +28,34 @@ namespace ElitaShop.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetByIdAsync(long productReviewId)
         {
-            var result = await _productReviewService.GetByIdAsync(productReviewId);
-            if(result == null)
-                throw new ProductReviewNotFoundException();
-            return Ok(result);
+            ProductReview? result = await _productReviewService.GetByIdAsync(productReviewId);
+            if (result != null)
+                return Ok(result);
+            return BadRequest("Not found ProductReview");
         }
-
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllAsync()
         {
-            var productReviews = await _productReviewService.GetAllAsync();
-            return Ok(productReviews);
-        }
+            IEnumerable<ProductReview>? productReviews = await _productReviewService.GetAllAsync();
+            if(productReviews != null )
+                return Ok(productReviews);
+            return BadRequest("Not Found ProductReview");
+        }   
         [HttpDelete]
         public async Task<ActionResult> DeleteAsync(long productReviewId)
         {
             var delete = await _productReviewService.DeleteAsync(productReviewId);
-            if (delete == false)
-                throw new ProductReviewNotFoundException();
-            return Ok(delete);
+            if(delete)
+                return Ok("Deleted");
+            return BadRequest("Do Not Deleted");
         }
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(long productReviewId,ProductReviewUpdateDto productReviewUpdateDto)
         {
             var update = await _productReviewService.UpdateAsync(productReviewId, productReviewUpdateDto);
-            if(update == false)
-                throw new ProductReviewNotFoundException();
-            return Ok(update);
-
+            if (update)
+                return Ok("Update ProductReview");
+            return BadRequest("Do not Update");
         }
 
 
