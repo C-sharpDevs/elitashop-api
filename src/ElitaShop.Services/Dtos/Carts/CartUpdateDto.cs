@@ -1,4 +1,6 @@
-﻿namespace ElitaShop.Services.Dtos.Carts
+﻿using ElitaShop.Domain.Enums;
+
+namespace ElitaShop.Services.Dtos.Carts
 {
     public class CartUpdateDto
     {
