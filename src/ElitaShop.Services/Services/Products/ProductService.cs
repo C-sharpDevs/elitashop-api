@@ -49,27 +49,6 @@
             return false;
 
         }
-
-        //public async Task<bool> UpdateAsync(long productId, ProductUpdateDto productUpdateDto)
-        //{
-        //    Product? resultProduct = await context.Products.AsNoTracking().FirstOrDefaultAsync(product => product.Id == productId);
-
-        //    if (resultProduct == null) throw new ProductNotFoundException();
-
-        //    bool imageResult = await _fileService.DeleteImageAsync($"{resultProduct.ProductImage}");
-        //    if (imageResult == false) throw new ImageNotFoundException();
-
-        //    string imagepath = await _fileService.UploadImageAsync(productUpdateDto.ProductImage);
-
-        //    var product = _mapper.Map<Product>(productUpdateDto);
-        //    product.Id = productId;
-        //    product.ProductImage = imagepath;
-        //    product.UpdatedAt = DateTime.UtcNow;
-        //    context.Update(product);
-        //    await context.SaveChangesAsync();
-        //    return true;
-        //}
-
         public async Task<bool> UpdateAsync(long productId, ProductUpdateDto productUpdateDto)
         {
             Product? resultProduct = await _productRepository.GetAsync(product => product.Id == productId);
@@ -113,14 +92,6 @@
 
             return result > 0;
         }
-
-
-        //public async Task<IEnumerable<Product>> GetAllAsync(PaginationParams @params)
-        //{
-        //    IEnumerable<Product>? products = await _productRepository.GetPageItemsAsync(@params);
-
-        //    return products;
-        //}
         public async Task<List<Product>> GetAllAsync()
         {
             IEnumerable<Product>? products = await _productRepository.GetAllAsync();
@@ -137,5 +108,9 @@
             return product;
         }
 
+        public Task<bool> DeleteRangeAsync(List<long> productIds)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

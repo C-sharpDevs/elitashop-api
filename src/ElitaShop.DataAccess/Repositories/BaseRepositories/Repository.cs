@@ -1,6 +1,5 @@
 ﻿using ElitaShop.DataAccess.Paginations;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace ElitaShop.DataAccess.Repositories.BaseRepositories

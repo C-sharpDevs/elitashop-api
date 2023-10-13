@@ -116,14 +116,46 @@ namespace ElitaShop.Services.Services.Products
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateProductCategoryAsync(long productId, long oldCategoryId, long newCategoryId)
+        public async Task<bool> UpdateProductCategoryAsync(long productId, long oldCategoryId, long newCategoryId)
         {
-            throw new NotImplementedException();
+            Product? product = await _productRepository.GetAsync(product => product.Id == productId);
+            if (product == null) throw new ProductNotFoundException();
+
+            Category? category = await _categoryRepository.GetAsync(product => product.Id == newCategoryId);
+            if (category == null) throw new CategoryNotFoundException();
+
+            ProductCategory? productCategory = await _productCategoryRepository.GetAsync(x => x.CategoryId == oldCategoryId && x.ProductId == productId);
+
+            productCategory.CategoryId = newCategoryId;
+
+            _productCategoryRepository.Update(productCategory);
+            int result = await _unitOfWork.CommitAsync();
+
+            return result > 0;
         }
 
-        public Task<bool> UpdateRangeProductsCategoryAsync(List<long> productIds, long oldCategoryId, long newCategoryId)
+        public async Task<bool> UpdateRangeProductsCategoryAsync(List<long> productIds, long oldCategoryId, long newCategoryId)
         {
-            throw new NotImplementedException();
+            Category? category = await _categoryRepository.GetAsync(category => category.Id == oldCategoryId);
+
+            if (category == null) throw new CategoryNotFoundException();
+
+            List<ProductCategory> listProductCategory = new List<ProductCategory>();
+
+            foreach (long i in productIds)
+            {
+                Product? product = await _productRepository.GetAsync(product => product.Id == i);
+
+                ProductCategory productCategory = new ProductCategory();
+                productCategory.ProductId = product.Id;
+                productCategory.CategoryId = newCategoryId;
+                listProductCategory.Add(productCategory);
+            }
+
+            _productCategoryRepository.AddRange(listProductCategory);
+            int result = await _unitOfWork.CommitAsync();
+
+            return result > 0;
         }
     }
 }
