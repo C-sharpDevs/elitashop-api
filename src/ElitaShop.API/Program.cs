@@ -2,6 +2,7 @@ using ElitaShop.DataAccess.Data;
 using ElitaShop.DataAccess.Interfaces.BaseRepositories;
 using ElitaShop.DataAccess.Repositories.BaseRepositories;
 using ElitaShop.Services.Interfaces.Common;
+using ElitaShop.Services.Interfaces.Product;
 using ElitaShop.Services.Services.Common;
 using ElitaShop.Services.Services.Common.AutoMapper;
 using ElitaShop.Services.Services.Products;
@@ -20,8 +21,11 @@ builder.Services.AddAutoMapper(typeof(ApplicationProfile));
 builder.Services.AddDbContext<ElitaShopDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IFileService, FileService>();
-builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IProductReviewService, ProductReviewService>();
+
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
