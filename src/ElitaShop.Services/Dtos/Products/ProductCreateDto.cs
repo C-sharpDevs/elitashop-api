@@ -12,9 +12,6 @@ namespace ElitaShop.Services.Dtos.Products
         public decimal Discount { get; set; }
         public int Quantity { get; set; }
         public bool IsShop { get; set; }
-        public DateTime? PublishedAt { get; set; }
-        public DateTime? StartAt { get; set; }
-        public DateTime? EndAt { get; set; }
         public IFormFile ProductImage { get; set; } = default!;
     }
 }
