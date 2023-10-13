@@ -19,7 +19,7 @@ namespace ElitaShop.Services.Services.Carts
         public async Task<bool> CreateAsync(CartCreateDto cartCreateDto)
         {
             var cart = _mapper.Map<Cart>(cartCreateDto);
-            
+
             await _cartRepository.AddAsync(cart);
             await _unitOfWork.CommitAsync();
 
@@ -28,8 +28,8 @@ namespace ElitaShop.Services.Services.Carts
 
         public async Task<bool> DeleteAsync(long cartId)
         {
-            var cart = _cartRepository.Get(x=> x.Id ==cartId);
-            if(cart == null)
+            var cart = _cartRepository.Get(x => x.Id == cartId);
+            if (cart == null)
             {
                 throw new CartNotFoundException();
             }
@@ -46,7 +46,7 @@ namespace ElitaShop.Services.Services.Carts
         public async Task<Cart> GetCartByIdAsync(long cartId)
         {
             var cart = _cartRepository.Get(x => x.Id == cartId);
-            if(cart == null)
+            if (cart == null)
             {
                 throw new CartNotFoundException();
             }
@@ -61,8 +61,8 @@ namespace ElitaShop.Services.Services.Carts
 
         public async Task<bool> UpdateAsync(long cartId, CartUpdateDto cartUpdateDto)
         {
-            var cart = _cartRepository.Get(x=>x.Id == cartId);
-            if(cart == null)
+            var cart = _cartRepository.Get(x => x.Id == cartId);
+            if (cart == null)
             {
                 throw new CartNotFoundException();
             }
