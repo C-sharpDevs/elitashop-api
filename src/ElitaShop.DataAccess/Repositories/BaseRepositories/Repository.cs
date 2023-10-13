@@ -1,6 +1,5 @@
 ﻿using ElitaShop.DataAccess.Paginations;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace ElitaShop.DataAccess.Repositories.BaseRepositories
@@ -37,7 +36,7 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
 
         public T Get(Expression<Func<T, bool>> expression)
         {
-            return _entitySet.FirstOrDefault(expression);
+            return _entitySet.AsNoTracking().FirstOrDefault(expression);
         }
 
         public IEnumerable<T> GetAll()
@@ -83,6 +82,8 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
         public void Update(T entity)
         {
             _entitySet.Update(entity);
+            //_dbContext.Entry(entity).State = EntityState.Modified;
+            
         }
 
         public void UpdateRange(IEnumerable<T> entities)

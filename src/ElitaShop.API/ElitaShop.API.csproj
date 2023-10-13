@@ -4,7 +4,9 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>1d14510d-d91a-4b46-b962-33801b7e9b61</UserSecretsId>
     <UserSecretsId>66fa4d3f-3e4b-47c4-bb8b-ea6f15ab0954</UserSecretsId>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +15,7 @@
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
+	 
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
