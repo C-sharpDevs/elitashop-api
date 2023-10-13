@@ -6,6 +6,7 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly ElitaShopDbContext _dbContext;
+        private bool _disposed;
 
         public UnitOfWork(ElitaShopDbContext dbContext)
         {
@@ -83,12 +84,34 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
 
         public void Rollback()
         {
-            _dbContext.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+            {
+                if(disposing)
+                {
+                    _dbContext.Dispose();
+                }
+                _disposed = true;
+            }
         }
 
         public async Task RollbackAsync(CancellationToken cancellationToken = default)
         {
-            await _dbContext.DisposeAsync();
+            await DisposeAsync(true);
+            GC.SuppressFinalize(this);
+        }
+
+        public async Task DisposeAsync(bool disposing) 
+        {
+            if(!disposing)
+            {
+                await _dbContext.DisposeAsync();
+            }
+            _disposed = true;
         }
     }
 }
