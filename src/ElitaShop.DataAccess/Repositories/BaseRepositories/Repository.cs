@@ -36,7 +36,7 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
 
         public T Get(Expression<Func<T, bool>> expression)
         {
-            return _entitySet.AsNoTracking().FirstOrDefault(expression);
+            return _entitySet.FirstOrDefault(expression);
         }
 
         public IEnumerable<T> GetAll()
