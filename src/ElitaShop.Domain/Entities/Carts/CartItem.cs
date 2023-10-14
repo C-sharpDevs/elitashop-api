@@ -1,4 +1,5 @@
 ﻿using ElitaShop.Domain.Entities.Products;
+using System.Text.Json.Serialization;
 
 namespace ElitaShop.Domain.Entities.Carts
 {
@@ -16,6 +17,7 @@ namespace ElitaShop.Domain.Entities.Carts
 
         [ForeignKey(nameof(Cart))]
         public long CartId { get; set; }
+        [JsonIgnore]
         public Cart Cart { get; set; }
     }
 }

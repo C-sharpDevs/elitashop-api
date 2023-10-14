@@ -34,37 +34,37 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
             await _dbContext.AddRangeAsync(entities, cancellationToken);
         }
 
-        public T Get(Expression<Func<T, bool>> expression)
+        public virtual T Get(Expression<Func<T, bool>> expression)
         {
             return _entitySet.AsNoTracking().FirstOrDefault(expression);
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             return _entitySet.AsEnumerable();
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> expression)
+        public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>> expression)
         {
             return _entitySet.Where(expression).AsEnumerable();
         }
 
-        public async Task<IEnumerable<T>> GetPageItemsAsync(PaginationParams paginationParams)
+        public virtual async Task<IEnumerable<T>> GetPageItemsAsync(PaginationParams paginationParams)
         {
             return await _entitySet.Skip(paginationParams.GetSkipCount()).Take(paginationParams.PageSize).ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await _entitySet.ToListAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
+        public virtual async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
         {
             return await _entitySet.Where(expression).ToListAsync(cancellationToken);
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
+        public virtual async Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
         {
             return await _entitySet.FirstOrDefaultAsync(expression, cancellationToken);
         }

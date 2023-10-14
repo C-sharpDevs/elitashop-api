@@ -12,7 +12,7 @@
         Task<bool> DeleteAsync(long productReviewId);
 
         //Get
-        Task<IList<ProductReview>> GetAllAsync(PaginationParams @params);
+        Task<IList<ProductReview>> GetAllAsync();
 
         //GetById
         Task<ProductReview> GetByIdAsync(long productReviewId);
