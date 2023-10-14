@@ -108,9 +108,17 @@
             return product;
         }
 
-        public Task<bool> DeleteRangeAsync(List<long> productIds)
+        public async Task<bool> DeleteRangeAsync(List<long> productIds)
         {
-            throw new NotImplementedException();
+            foreach(long id in  productIds)
+            {
+                Product? product = await _productRepository.GetAsync(prod => prod.Id == id);
+
+                _productRepository.Remove(product);
+            }
+
+            int result = await _unitOfWork.CommitAsync();
+            return result > 0;
         }
     }
 }
