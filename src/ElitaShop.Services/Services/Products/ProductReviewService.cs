@@ -10,17 +10,19 @@ namespace ElitaShop.Services.Services.Products
         private readonly IProductReviewRepository _productReviewRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        public ProductReviewService(IProductReviewRepository productReviewRepository,
+        public ProductReviewService(
             IMapper mapper,
             IUnitOfWork unitOfWork)
         {
-            _productReviewRepository = productReviewRepository;
+            _productReviewRepository = unitOfWork.ProductReviewRepository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
         public async Task<bool> CreateAsync(ProductReviewCreateDto productReviewCreateDto)
         {
             ProductReview productReview = _mapper.Map<ProductReview>(productReviewCreateDto);
+            productReview.PublishedAt = DateTime.UtcNow;
+
             await _productReviewRepository.AddAsync(productReview);
             int result = await _unitOfWork.CommitAsync();
             return result != 0;
@@ -33,15 +35,15 @@ namespace ElitaShop.Services.Services.Products
                 throw new ProductReviewNotFoundException();
 
             _productReviewRepository.Remove(productReview);
-            await _unitOfWork.CommitAsync();
+            int res = await _unitOfWork.CommitAsync();
 
-            return true;
+            return res > 0;
 
         }
 
-        public async Task<IList<ProductReview>> GetAllAsync(PaginationParams @params)
+        public async Task<IList<ProductReview>> GetAllAsync()
         {
-            var productReviews = await _productReviewRepository.GetPageItemsAsync(@params);
+            var productReviews = await _productReviewRepository.GetAllAsync();
             return productReviews.ToList();
         }
 
@@ -58,14 +60,19 @@ namespace ElitaShop.Services.Services.Products
             if (productReview == null)
                 throw new ProductReviewNotFoundException();
 
-            ProductReview productReview1 = _mapper.Map<ProductReview>(productReviewUpdateDto);
-            _productReviewRepository.Update(productReview1);
-            await _unitOfWork.CommitAsync();
+            productReview.ProductId = productReviewUpdateDto.ProductId;
+            productReview.Title = productReviewUpdateDto.Title;
+            productReview.Rating = productReviewUpdateDto.Rating;
+            productReview.Published = productReviewUpdateDto.Published;
+            productReview.Content = productReviewUpdateDto.Content;
+            productReview.UpdatedAt = DateTime.UtcNow;
 
-            return true;
+            _productReviewRepository.Update(productReview);
+            int result = await _unitOfWork.CommitAsync();
 
 
 
+            return result > 0;
         }
 
 
