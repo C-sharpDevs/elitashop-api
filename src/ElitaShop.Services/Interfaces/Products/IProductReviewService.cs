@@ -1,4 +1,4 @@
-﻿namespace ElitaShop.Services.Interfaces.Product
+﻿namespace ElitaShop.Services.Interfaces.Products
 {
     public interface IProductReviewService
     {

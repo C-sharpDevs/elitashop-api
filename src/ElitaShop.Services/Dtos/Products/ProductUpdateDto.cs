@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace ElitaShop.Services.Dtos.Products
+﻿namespace ElitaShop.Services.Dtos.Products
 {
     public class ProductUpdateDto
     {
-        public long UserId { get; set; }
         public string Title { get; set; }
         public string MetaTitle { get; set; }
         public string Description { get; set; }

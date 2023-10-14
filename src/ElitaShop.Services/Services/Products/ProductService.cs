@@ -1,4 +1,6 @@
-﻿namespace ElitaShop.Services.Services.Products
+﻿using ElitaShop.Services.Interfaces.Products;
+
+namespace ElitaShop.Services.Services.Products
 {
     public class ProductService : IProductService
     {
@@ -81,7 +83,6 @@
 
             string imagepath = await _fileService.UploadImageAsync(productUpdateDto.ProductImage);
 
-            resultProduct.UserId = productUpdateDto.UserId;
             resultProduct.Title = productUpdateDto.Title;
             resultProduct.Description = productUpdateDto.Description;
             resultProduct.MetaTitle = productUpdateDto.MetaTitle;

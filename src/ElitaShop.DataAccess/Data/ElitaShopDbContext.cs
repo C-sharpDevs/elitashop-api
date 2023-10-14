@@ -4,6 +4,11 @@ namespace ElitaShop.DataAccess.Data
 {
     public class ElitaShopDbContext : DbContext
     {
+        public ElitaShopDbContext()
+        {
+            
+        }
+
         public ElitaShopDbContext(DbContextOptions<ElitaShopDbContext> options) : base(options)
         {}
         public DbSet<Cart> Carts { get; set; }
