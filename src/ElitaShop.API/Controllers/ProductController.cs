@@ -70,5 +70,15 @@ namespace ElitaShop.API.Controllers
                 return Ok("Sucesfully Updated");
             return BadRequest("Do Not Updated");
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteRangeAsync(List<long> productIds)
+        {
+            bool result = await _productService.DeleteRangeAsync(productIds);
+
+            if (result)
+                return Ok("Sucesfully deleted");
+            return BadRequest("Do Not Deleted");
+        }
     }
 }
