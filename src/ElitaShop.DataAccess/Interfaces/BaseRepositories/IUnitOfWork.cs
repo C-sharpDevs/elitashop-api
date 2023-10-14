@@ -8,6 +8,7 @@
         IProductReviewRepository ProductReviewRepository { get; }
         IOrderRepository OrderRepository { get; }
         IUserRepository UserRepository { get; }
+        IProductCategoryRepository ProductCategoryRepository { get; }
 
         int Commit();
         void Rollback();

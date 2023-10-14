@@ -1,7 +1,4 @@
-﻿using ElitaShop.DataAccess.Repositories.EntityRepositories;
-using System.Diagnostics;
-
-namespace ElitaShop.DataAccess.Repositories.BaseRepositories
+﻿namespace ElitaShop.DataAccess.Repositories.BaseRepositories
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -18,10 +15,20 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
         public IProductRepository _productRepository;
         private IProductReviewRepository _productReviewRepository;
         private IUserRepository _userRepository;
+        private IProductCategoryRepository _productCategoryRepository;
 
-        public ICartRepository CartRepository 
+        public IProductCategoryRepository ProductCategoryRepository
         {
-            get {
+            get
+            {
+                return _productCategoryRepository ??= new ProductCategoryRepository(_dbContext);
+            }
+        }
+
+        public ICartRepository CartRepository
+        {
+            get
+            {
                 return _cartRepository ??= new CartRepository(_dbContext);
             }
         }
