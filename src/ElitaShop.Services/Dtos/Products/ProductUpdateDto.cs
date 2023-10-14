@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace ElitaShop.Services.Dtos.Products
+﻿namespace ElitaShop.Services.Dtos.Products
 {
     public class ProductUpdateDto
     {

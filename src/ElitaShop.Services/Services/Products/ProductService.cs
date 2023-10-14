@@ -1,4 +1,6 @@
-﻿namespace ElitaShop.Services.Services.Products
+﻿using ElitaShop.Services.Interfaces.Products;
+
+namespace ElitaShop.Services.Services.Products
 {
     public class ProductService : IProductService
     {

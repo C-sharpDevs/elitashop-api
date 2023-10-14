@@ -1,4 +1,7 @@
-﻿using ElitaShop.Services.Interfaces.Product;
+using ElitaShop.DataAccess.Interfaces.BaseRepositories;
+using ElitaShop.DataAccess.Interfaces.EntityRepositories;
+using ElitaShop.Domain.Exceptions.Products;
+using ElitaShop.Services.Interfaces.Products;
 
 namespace ElitaShop.Services.Services.Products
 {

@@ -1,5 +1,8 @@
-﻿using ElitaShop.Domain.Entities.Products;
 using ElitaShop.Services.Dtos.Products;
+
+
+﻿using ElitaShop.Domain.Entities.Products;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElitaShop.API.Controllers

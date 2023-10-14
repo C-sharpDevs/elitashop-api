@@ -1,106 +1,74 @@
-﻿using ElitaShop.Domain.Entities.Carts;
-using ElitaShop.Services.Interfaces.CartItems;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using ElitaShop.Services.Interfaces.CartItems;
+using ElitaShop.Domain.Exceptions.CartItems;
 namespace ElitaShop.Services.Services.CartItems
 {
     public class CartItemService : ICartItemService
     {
-        private readonly ICartRepository _cartRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICartItemRepository _cartItemRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly long _cartId;
 
-        public CartItemService(ICartRepository cartItemService, IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+        public CartItemService(IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
         {
-            _cartRepository = cartItemService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _cartItemRepository = _unitOfWork.CartItemRepository;
             _httpContextAccessor = httpContextAccessor;
             var id = _httpContextAccessor.HttpContext.Request.Headers["cartId"].ToString();
             _cartId = long.Parse(id);
-            
-
-        }
-        
-
-        public async Task AddItem(CartItemCreateDto item)
-        {
-            Cart cart = await _unitOfWork.CartRepository.GetCartWithItmesAsync(_cartId);
-
-            var cartItem = _mapper.Map<CartItem>(item);
-            cart.CartItems.Add(cartItem);
-            await _unitOfWork.CommitAsync();
         }
 
-        public async Task DeleteItem(long cartItemId)
-        {
-            Cart cart = await _cartRepository.GetCartWithItmesAsync(cartItemId);
-            CartItem item;
-            try
-            {
-                item = cart.CartItems.First();
-            }
-            catch(Exception ex)
-            {
-                throw new Exception();
-            }
-            cart.CartItems.Remove(item);
-            await _unitOfWork.CommitAsync();
 
+        public async Task<bool> AddItem(CartItemCreateDto item)
+        {
+            CartItem cartItem = _mapper.Map<CartItem>(item);
+            cartItem.CartId = _cartId;
+
+            _cartItemRepository.Add(cartItem);
+            var result = await _unitOfWork.CommitAsync();
+
+            return result > 0;
+        }
+
+        public async Task<bool> DeleteItem(long cartItemId)
+        {
+            CartItem cartItem = await GetItemById(cartItemId);
+            _cartItemRepository.Remove(cartItem);
+
+            var result = await _unitOfWork.CommitAsync();
+            return result > 0;
         }
 
         public async Task<List<CartItem>> GetAllItmes()
         {
-            var cart = await _cartRepository.GetCartWithItmesAsync(_cartId);
-            var items = cart.CartItems.ToList();
-            return items;
+            return (List<CartItem>)await _cartItemRepository.GetAllAsync(x => x.CartId == _cartId);
         }
 
-        public async Task<CartItem> GetItem(long cartItemId)
+        public async Task<CartItem> GetItemById(long cartItemId)
         {
-            var cart = await _cartRepository.GetCartWithItmesAsync(_cartId);
-            CartItem item;
-            try
+            CartItem cartItem = await _cartItemRepository.GetAsync(x => x.CartId == cartItemId);
+            if(cartItem == null)
             {
-                item = cart.CartItems.First(x => x.Id == cartItemId);
+                throw new CartItemNotFound();
             }
-            catch (Exception ex)
-            {
-                throw new Exception();
-            }
-            return item;
-
+            return cartItem;
         }
 
-        public Task<List<CartItem>> GetPageItmesAsync(PaginationParams @params)
+        public async Task<List<CartItem>> GetPageItmesAsync(PaginationParams @params)
         {
-            throw new NotImplementedException();
+            return (List<CartItem>)await _cartItemRepository.GetPageItemsAsync(@params);
         }
 
-        public async Task UpdateItem(long cartItemId, CartItemUpdateDto updateItem)
+        public async Task<bool> UpdateItem(long cartItemId, CartItemUpdateDto item)
         {
-            Cart cart = await _cartRepository.GetCartWithItmesAsync(cartItemId);
-            CartItem item;
-            try
-            {
-                item = cart.CartItems.First(x=>x.Id==cartItemId);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception();
-            }
-            CartItem newItem = _mapper.Map<CartItem>(updateItem);
-            cart.CartItems.Remove(item);
-            newItem.Id = cartItemId;
-            cart.CartItems.Add(newItem);
-            await _unitOfWork.CommitAsync();
+            CartItem cartItem = await GetItemById(cartItemId);
+            cartItem = _mapper.Map<CartItem>(item);
+            _cartItemRepository.Update(cartItem);
+
+            var result = await _unitOfWork.CommitAsync();
+            return result > 0;
         }
     }
 }
