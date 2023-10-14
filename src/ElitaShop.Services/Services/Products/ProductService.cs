@@ -83,7 +83,6 @@ namespace ElitaShop.Services.Services.Products
 
             string imagepath = await _fileService.UploadImageAsync(productUpdateDto.ProductImage);
 
-            resultProduct.UserId = productUpdateDto.UserId;
             resultProduct.Title = productUpdateDto.Title;
             resultProduct.Description = productUpdateDto.Description;
             resultProduct.MetaTitle = productUpdateDto.MetaTitle;

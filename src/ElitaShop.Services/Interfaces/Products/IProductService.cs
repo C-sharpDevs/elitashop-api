@@ -7,9 +7,6 @@ namespace ElitaShop.Services.Interfaces.Products
 
         // Update
         Task<bool> UpdateAsync(long productId, ProductUpdateDto productUpdateDto);
-      
-        // Update
-        Task<bool> UpdateAsync(long productId, ProductUpdateDto productUpdateDto);
         Task<bool> UpdateImageAsync(long productId, IFormFile productImage);
 
         // Delete

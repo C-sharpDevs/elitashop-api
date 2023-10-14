@@ -16,9 +16,9 @@ namespace ElitaShop.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(long userId)
         {
-            var result = await _cartService.GetAllAsync();
+            var result = await _cartService.GetAllAsync(userId);
             return Ok(result);
         }
         [HttpPost]

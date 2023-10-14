@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace ElitaShop.DataAccess.Repositories.EntityRepositories
 {
@@ -6,14 +7,11 @@ namespace ElitaShop.DataAccess.Repositories.EntityRepositories
     {
         public CartRepository(ElitaShopDbContext dbContext) : base(dbContext) { }
 
-        public async Task<Cart> GetCartWithItmesAsync(long id)
+        
+        public override Cart Get(Expression<Func<Cart, bool>> expression)
         {
-            var cart = await _entitySet.Where(x=>x.Id == id).Include(y => y.CartItems).FirstOrDefaultAsync();
+            var cart = _entitySet.Include(x => x.CartItems).Where(expression).FirstOrDefault();
             return cart;
-        }
-        public async Task UpdateCartItem(CartItem cartItem)
-        {
-
         }
     }
 }
