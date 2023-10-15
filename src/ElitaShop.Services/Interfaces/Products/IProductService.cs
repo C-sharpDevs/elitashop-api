@@ -9,12 +9,13 @@ namespace ElitaShop.Services.Interfaces.Products
         Task<bool> UpdateAsync(long productId, ProductUpdateDto productUpdateDto);
         Task<bool> UpdateImageAsync(long productId, IFormFile productImage);
 
-    // Delete
-    Task<bool> DeleteAsync(long productId);
-    Task<bool> DeleteRangeAsync(List<long> productIds);
+        // Delete
+        Task<bool> DeleteAsync(long productId);
+        Task<bool> DeleteRangeAsync(List<long> productIds);
 
-    // Get
-    //Task<IEnumerable<Product>> GetAllAsync(PaginationParams @params);
-    Task<List<Product>> GetAllAsync();
-    Task<Product> GetByIdAsync(long productId);
+        // Get
+        //Task<IEnumerable<Product>> GetAllAsync(PaginationParams @params);
+        Task<List<Product>> GetAllAsync();
+        Task<Product> GetByIdAsync(long productId);
+    }
 }

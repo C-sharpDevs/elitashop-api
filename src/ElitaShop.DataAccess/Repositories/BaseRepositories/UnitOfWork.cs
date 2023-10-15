@@ -79,13 +79,6 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
                 return _userRepository ??= new UserRepository(_dbContext);
             }
         }
-        public ICartItemRepository CartItemRepository
-        {
-            get
-            {
-                return _cartItemRepository ??= new CartItemRepository(_dbContext);
-            }
-        }
 
         public int Commit()
         {

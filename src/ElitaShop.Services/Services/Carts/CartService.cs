@@ -41,29 +41,14 @@ namespace ElitaShop.Services.Services.Carts
             {
                 throw new CartNotFoundException();
             }
-            _cartRepository.Remove(cart);
-            await _unitOfWork.CommitAsync();
-            return true;
+            
+            return cart;
         }
 
         public async Task<List<Cart>> GetPageItemsAsync(PaginationParams @params)
         {
             var result = await _cartRepository.GetPageItemsAsync(@params);
             return (List<Cart>)result;
-        }
-        public async Task<bool> CreateAsync(long userId, CartCreateDto cartCreateDto)
-        {
-            var cart = _mapper.Map<Cart>(cartCreateDto);
-            cart.UserId = userId;
-            await _cartRepository.AddAsync(cart);
-            var result = await _unitOfWork.CommitAsync();
-           
-            if(result>0)
-            {
-                _httpContextAccessor.HttpContext.Response.Headers.Add("cartId", cart.Id.ToString());
-                return true;
-            }
-            return false;
         }
 
         public async Task<bool> DeleteAsync(long cartId)
@@ -95,6 +80,11 @@ namespace ElitaShop.Services.Services.Carts
             await _unitOfWork.CommitAsync();
             return true;
 
+        }
+
+        public Task<List<Cart>> GetAllAsync(long userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
