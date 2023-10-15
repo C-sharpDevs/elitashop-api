@@ -21,7 +21,7 @@ namespace ElitaShop.Services.Services.CartItems
         }
 
 
-        public async Task<bool> AddItem(CartItemCreateDto item)
+        public async Task<bool> AddItemAsync(CartItemCreateDto item)
         {
             CartItem cartItem = _mapper.Map<CartItem>(item);
             cartItem.CartId = _cartId;
@@ -32,21 +32,22 @@ namespace ElitaShop.Services.Services.CartItems
             return result > 0;
         }
 
-        public async Task<bool> DeleteItem(long cartItemId)
+
+        public async Task<bool> DeleteItemAsync(long cartItemId)
         {
-            CartItem cartItem = await GetItemById(cartItemId);
+            CartItem cartItem = await GetItemByIdAsync(cartItemId);
             _cartItemRepository.Remove(cartItem);
 
             var result = await _unitOfWork.CommitAsync();
             return result > 0;
         }
 
-        public async Task<List<CartItem>> GetAllItmes()
+        public async Task<List<CartItem>> GetAllItmesAsync()
         {
             return (List<CartItem>)await _cartItemRepository.GetAllAsync(x => x.CartId == _cartId);
         }
 
-        public async Task<CartItem> GetItemById(long cartItemId)
+        public async Task<CartItem> GetItemByIdAsync(long cartItemId)
         {
             CartItem cartItem = await _cartItemRepository.GetAsync(x => x.CartId == cartItemId);
             if (cartItem == null)
@@ -61,10 +62,11 @@ namespace ElitaShop.Services.Services.CartItems
             return (List<CartItem>)await _cartItemRepository.GetPageItemsAsync(@params);
         }
 
-        public async Task<bool> UpdateItem(long cartItemId, CartItemUpdateDto item)
+        public async Task<bool> UpdateItemAsync(long cartItemId, CartItemUpdateDto item)
         {
-            CartItem cartItem = await GetItemById(cartItemId);
+            CartItem cartItem = await GetItemByIdAsync(cartItemId);
             cartItem = _mapper.Map<CartItem>(item);
+            cartItem.UpdatedAt = DateTime.UtcNow;
             _cartItemRepository.Update(cartItem);
 
             var result = await _unitOfWork.CommitAsync();
