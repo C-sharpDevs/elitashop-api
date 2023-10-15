@@ -35,13 +35,12 @@ namespace ElitaShop.Services.Services.Carts
 
         public async Task<Cart> GetCartByIdAsync(long cartId)
         {
-            var cart = await GetCartByIdAsync(cartId);
-            
+            var cart = await _cartRepository.GetAsync(x => x.Id == cartId);
+
             if (cart == null)
             {
                 throw new CartNotFoundException();
             }
-            
             return cart;
         }
 
@@ -69,22 +68,17 @@ namespace ElitaShop.Services.Services.Carts
 
         public async Task<bool> UpdateAsync(long cartId, CartUpdateDto cartUpdateDto)
         {
-            var cart = _cartRepository.Get(x => x.Id == cartId);
-            if (cart == null)
-            {
-                throw new CartNotFoundException();
-            }
-            var newCart = _mapper.Map<Cart>(cartUpdateDto);
-            newCart.Id = cartId;
-            _cartRepository.Update(newCart);
-            await _unitOfWork.CommitAsync();
-            return true;
+            var cart = await GetCartByIdAsync(cartId);
+            cart = _mapper.Map<Cart>(cartUpdateDto);
+            cart.UpdatedAt = DateTime.UtcNow;
+            var result = await _unitOfWork.CommitAsync();
+            return result > 0;
 
         }
 
-        public Task<List<Cart>> GetAllAsync(long userId)
+        public async Task<List<Cart>> GetAllAsync(long userId)
         {
-            throw new NotImplementedException();
+            return (List<Cart>)await _cartRepository.GetAllAsync(x => x.UserId == userId);
         }
     }
 }

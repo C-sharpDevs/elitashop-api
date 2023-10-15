@@ -1,8 +1,4 @@
-﻿using ElitaShop.Services.Dtos.Carts;
-using ElitaShop.Services.Interfaces.Carts;
-using Microsoft.AspNetCore.Mvc;
-
-namespace ElitaShop.API.Controllers
+﻿namespace ElitaShop.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -40,7 +36,7 @@ namespace ElitaShop.API.Controllers
             return Ok(result);
         }
         [HttpGet]
-        public async Task<IActionResult> GetCartById(long cartId)
+        public async Task<IActionResult> GetById(long cartId)
         {
             var result = await _cartService.GetCartByIdAsync(cartId);
             return Ok(result);
