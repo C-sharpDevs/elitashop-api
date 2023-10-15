@@ -18,26 +18,6 @@ namespace ElitaShop.Services.Services.Carts
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<List<Cart>> GetAllAsync(long userId)
-        {
-            return (List<Cart>)await _cartRepository.GetAllAsync(x=>x.UserId == userId);
-        }
-
-        public async Task<Cart> GetCartByIdAsync(long cartId)
-        {
-            var cart = _cartRepository.Get(x => x.Id == cartId);
-            if (cart == null)
-            {
-                throw new CartNotFoundException();
-            }
-            return cart;
-        }
-
-        public async Task<List<Cart>> GetPageItemsAsync(PaginationParams @params)
-        {
-            var result = await _cartRepository.GetPageItemsAsync(@params);
-            return (List<Cart>)result;
-        }
         public async Task<bool> CreateAsync(long userId, CartCreateDto cartCreateDto)
         {
             var cart = _mapper.Map<Cart>(cartCreateDto);
@@ -47,10 +27,28 @@ namespace ElitaShop.Services.Services.Carts
            
             if(result>0)
             {
-                _httpContextAccessor.HttpContext.Response.Headers.Add("cartId", cart.Id.ToString());
+                _httpContextAccessor.HttpContext.Response.Headers["cartId"] = cart.Id.ToString();
                 return true;
             }
             return false;
+        }
+
+        public async Task<Cart> GetCartByIdAsync(long cartId)
+        {
+            var cart = await GetCartByIdAsync(cartId);
+            
+            if (cart == null)
+            {
+                throw new CartNotFoundException();
+            }
+            
+            return cart;
+        }
+
+        public async Task<List<Cart>> GetPageItemsAsync(PaginationParams @params)
+        {
+            var result = await _cartRepository.GetPageItemsAsync(@params);
+            return (List<Cart>)result;
         }
 
         public async Task<bool> DeleteAsync(long cartId)
@@ -76,12 +74,17 @@ namespace ElitaShop.Services.Services.Carts
             {
                 throw new CartNotFoundException();
             }
-            _mapper.Map(cartUpdateDto, cart);
-            cart.UpdatedAt = DateTime.UtcNow;
-            _cartRepository.Update(cart);
-            var result = await _unitOfWork.CommitAsync();
-            return result > 0;
+            var newCart = _mapper.Map<Cart>(cartUpdateDto);
+            newCart.Id = cartId;
+            _cartRepository.Update(newCart);
+            await _unitOfWork.CommitAsync();
+            return true;
 
+        }
+
+        public Task<List<Cart>> GetAllAsync(long userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ElitaShop.DataAccess.Repositories.EntityRepositories;
-using System.Diagnostics;
 
 namespace ElitaShop.DataAccess.Repositories.BaseRepositories
 {
@@ -19,11 +18,29 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
         public IProductRepository _productRepository;
         private IProductReviewRepository _productReviewRepository;
         private IUserRepository _userRepository;
+        private IProductCategoryRepository _productCategoryRepository;
         private ICartItemRepository _cartItemRepository;
 
-        public ICartRepository CartRepository 
+        public ICartItemRepository CartItemRepository
         {
-            get {
+            get
+            {
+                return _cartItemRepository ??= new CartItemRepository(_dbContext);
+            }
+        }
+
+        public IProductCategoryRepository ProductCategoryRepository
+        {
+            get
+            {
+                return _productCategoryRepository ??= new ProductCategoryRepository(_dbContext);
+            }
+        }
+
+        public ICartRepository CartRepository
+        {
+            get
+            {
                 return _cartRepository ??= new CartRepository(_dbContext);
             }
         }
@@ -60,13 +77,6 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
             get
             {
                 return _userRepository ??= new UserRepository(_dbContext);
-            }
-        }
-        public ICartItemRepository CartItemRepository
-        {
-            get
-            {
-                return _cartItemRepository ??= new CartItemRepository(_dbContext);
             }
         }
 

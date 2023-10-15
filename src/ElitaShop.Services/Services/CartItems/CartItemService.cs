@@ -49,7 +49,7 @@ namespace ElitaShop.Services.Services.CartItems
         public async Task<CartItem> GetItemById(long cartItemId)
         {
             CartItem cartItem = await _cartItemRepository.GetAsync(x => x.CartId == cartItemId);
-            if(cartItem == null)
+            if (cartItem == null)
             {
                 throw new CartItemNotFound();
             }

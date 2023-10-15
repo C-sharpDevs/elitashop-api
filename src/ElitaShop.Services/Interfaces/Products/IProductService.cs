@@ -11,7 +11,8 @@ namespace ElitaShop.Services.Interfaces.Products
 
         // Delete
         Task<bool> DeleteAsync(long productId);
-    
+        Task<bool> DeleteRangeAsync(List<long> productIds);
+
         // Get
         //Task<IEnumerable<Product>> GetAllAsync(PaginationParams @params);
         Task<List<Product>> GetAllAsync();

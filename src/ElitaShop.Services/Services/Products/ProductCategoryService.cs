@@ -7,17 +7,15 @@ namespace ElitaShop.Services.Services.Products
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IMapper _mapper;
         private readonly IProductRepository _productRepository;
         private readonly IProductCategoryRepository _productCategoryRepository;
 
-        public ProductCategoryService(IProductCategoryRepository productCategoryRepository, IUnitOfWork unitOfWork, IMapper mapper, IProductRepository productRepository, ICategoryRepository categoryRepository)
+        public ProductCategoryService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
-            _categoryRepository = categoryRepository;
-            _productRepository = productRepository;
-            _productCategoryRepository = productCategoryRepository;
+            _categoryRepository = unitOfWork.CategoryRepository;
+            _productRepository = unitOfWork.ProductRepository;
+            _productCategoryRepository = unitOfWork.ProductCategoryRepository;
         }
 
         public async Task<bool> AddProductToCategoryAsync(long productId, long categoryId)
@@ -68,17 +66,9 @@ namespace ElitaShop.Services.Services.Products
 
         public async Task<bool> DeleteAsync(long productId, long categoryId)
         {
-            Product? product = await _productRepository.GetAsync(product => product.Id == productId);
-            Category? category = await _categoryRepository.GetAsync(category => category.Id == categoryId);
+            ProductCategory? product = await _productCategoryRepository.GetAsync(product => product.ProductId == productId && product.CategoryId == categoryId);
 
-            if (product == null) throw new ProductNotFoundException();
-            if (category == null) throw new CategoryNotFoundException();
-
-            ProductCategory productCategory = new ProductCategory();
-            productCategory.ProductId = productId;
-            productCategory.CategoryId = categoryId;
-
-            _productCategoryRepository.Remove(productCategory);
+            _productCategoryRepository.Remove(product);
             int result = await _unitOfWork.CommitAsync();
 
             return result > 0;
@@ -90,23 +80,17 @@ namespace ElitaShop.Services.Services.Products
 
             if (category == null) throw new CategoryNotFoundException();
 
-            List<ProductCategory> products = new List<ProductCategory>();
-
 
             foreach (long product in productIds)
             {
-                Product? resultProduct = await _productRepository.GetAsync(prod => prod.Id == product);
+                ProductCategory? resultProduct = await _productCategoryRepository.GetAsync(prod => prod.ProductId == product && prod.CategoryId == category.Id);
 
                 if (resultProduct != null)
                 {
-                    ProductCategory productCategory = new ProductCategory();
-                    productCategory.ProductId = resultProduct.Id;
-                    productCategory.CategoryId = category.Id;
-                    products.Add(productCategory);
+                    _productCategoryRepository.Remove(resultProduct);
                 }
             }
 
-            _productCategoryRepository.RemoveRange(products);
             int result = await _unitOfWork.CommitAsync();
 
             return result > 0;
@@ -117,14 +101,48 @@ namespace ElitaShop.Services.Services.Products
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateProductCategoryAsync(long productId, long oldCategoryId, long newCategoryId)
+        public async Task<bool> UpdateProductCategoryAsync(long productId, long oldCategoryId, long newCategoryId)
         {
-            throw new NotImplementedException();
+
+            Category? category = await _categoryRepository.GetAsync(product => product.Id == newCategoryId);
+            if (category == null) throw new CategoryNotFoundException();
+
+            ProductCategory? productCategory = await _productCategoryRepository.GetAsync(x => x.CategoryId == oldCategoryId && x.ProductId == productId);
+
+            if (productCategory != null)
+            {
+                productCategory.CategoryId = newCategoryId;
+                productCategory.UpdatedAt = DateTime.UtcNow;
+
+                _productCategoryRepository.Update(productCategory);
+            }
+
+            int result = await _unitOfWork.CommitAsync();
+
+            return result > 0;
         }
 
-        public Task<bool> UpdateRangeProductsCategoryAsync(List<long> productIds, long oldCategoryId, long newCategoryId)
+        public async Task<bool> UpdateRangeProductsCategoryAsync(List<long> productIds, long oldCategoryId, long newCategoryId)
         {
-            throw new NotImplementedException();
+            Category? category = await _categoryRepository.GetAsync(category => category.Id == oldCategoryId);
+
+            if (category == null) throw new CategoryNotFoundException();
+
+            foreach (long i in productIds)
+            {
+                ProductCategory? product = await _productCategoryRepository.GetAsync(prod => prod.ProductId == i && prod.CategoryId == category.Id);
+
+                if (product != null)
+                {
+                    product.CategoryId = newCategoryId;
+                    product.UpdatedAt = DateTime.UtcNow;
+                    _productCategoryRepository.Update(product);
+                }
+            }
+
+            int result = await _unitOfWork.CommitAsync();
+
+            return result > 0;
         }
     }
 }
