@@ -8,7 +8,7 @@
         IProductReviewRepository ProductReviewRepository { get; }
         IOrderRepository OrderRepository { get; }
         IUserRepository UserRepository { get; }
-        ICartItemRepository CartItemRepository { get; }
+        ICartItemRepository? CartItemRepository { get; }
 
         int Commit();
         void Rollback();
