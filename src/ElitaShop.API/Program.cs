@@ -3,12 +3,13 @@ using ElitaShop.DataAccess.Interfaces.BaseRepositories;
 using ElitaShop.DataAccess.Repositories.BaseRepositories;
 using ElitaShop.Services.Interfaces.CartItems;
 using ElitaShop.Services.Interfaces.Carts;
+using ElitaShop.Services.Interfaces.Categories;
 using ElitaShop.Services.Interfaces.Common;
 
 using ElitaShop.Services.Interfaces.Products;
 using ElitaShop.Services.Services.CartItems;
 using ElitaShop.Services.Services.Carts;
-
+using ElitaShop.Services.Services.Categories;
 using ElitaShop.Services.Services.Common;
 using ElitaShop.Services.Services.Common.AutoMapper;
 using ElitaShop.Services.Services.Products;
@@ -31,6 +32,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICartItemService, CartItemService>();
+builder.Services.AddScoped<ICategoryService,CategoryService>();
 builder.Services.AddScoped<IProductReviewService, ProductReviewService>();
 
 
