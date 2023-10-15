@@ -30,7 +30,7 @@ namespace ElitaShop.API.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(long cartId, CartUpdateDto cartUpdateDto)
         {
-            var result = await _cartService.UpdateAsync(cartId,cartUpdateDto);
+            var result = await _cartService.UpdateAsync(cartId, cartUpdateDto);
             return Ok(result);
         }
         [HttpDelete]
