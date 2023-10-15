@@ -5,7 +5,7 @@ using ElitaShop.Services.Interfaces.CartItems;
 using ElitaShop.Services.Interfaces.Carts;
 using ElitaShop.Services.Interfaces.Categories;
 using ElitaShop.Services.Interfaces.Common;
-
+using ElitaShop.Services.Interfaces.Product;
 using ElitaShop.Services.Interfaces.Products;
 using ElitaShop.Services.Services.CartItems;
 using ElitaShop.Services.Services.Carts;
