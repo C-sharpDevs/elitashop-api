@@ -16,9 +16,9 @@ namespace ElitaShop.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(long userId)
         {
-            var result = await _cartService.GetAllAsync();
+            var result = await _cartService.GetAllAsync(userId);
             return Ok(result);
         }
         [HttpPost]
@@ -30,7 +30,7 @@ namespace ElitaShop.API.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(long cartId, CartUpdateDto cartUpdateDto)
         {
-            var result = await _cartService.UpdateAsync(cartId,cartUpdateDto);
+            var result = await _cartService.UpdateAsync(cartId, cartUpdateDto);
             return Ok(result);
         }
         [HttpDelete]

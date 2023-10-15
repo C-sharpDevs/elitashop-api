@@ -1,4 +1,6 @@
-﻿namespace ElitaShop.DataAccess.Repositories.BaseRepositories
+﻿using ElitaShop.DataAccess.Repositories.EntityRepositories;
+
+namespace ElitaShop.DataAccess.Repositories.BaseRepositories
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -16,6 +18,15 @@
         private IProductReviewRepository _productReviewRepository;
         private IUserRepository _userRepository;
         private IProductCategoryRepository _productCategoryRepository;
+        private ICartItemRepository _cartItemRepository;
+
+        public ICartItemRepository CartItemRepository
+        {
+            get
+            {
+                return _cartItemRepository ??= new CartItemRepository(_dbContext);
+            }
+        }
 
         public IProductCategoryRepository ProductCategoryRepository
         {

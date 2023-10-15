@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ElitaShop.Services.Interfaces.Products;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ElitaShop.API.Controllers
 {
