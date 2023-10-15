@@ -1,5 +1,4 @@
-﻿
-namespace ElitaShop.Domain.Entities.Products
+﻿namespace ElitaShop.Domain.Entities.Products
 {
     public class Product : Auditable
     {

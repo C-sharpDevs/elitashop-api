@@ -1,7 +1,4 @@
-﻿using ElitaShop.Services.Interfaces.Products;
-using Microsoft.AspNetCore.Mvc;
-
-namespace ElitaShop.API.Controllers
+﻿namespace ElitaShop.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
