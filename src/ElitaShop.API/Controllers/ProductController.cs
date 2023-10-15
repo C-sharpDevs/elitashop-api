@@ -1,9 +1,10 @@
 using ElitaShop.Services.Dtos.Products;
-using ElitaShop.Services.Interfaces.Products;
+
 
 ﻿using ElitaShop.Domain.Entities.Products;
 
 using Microsoft.AspNetCore.Mvc;
+using ElitaShop.Services.Interfaces.Products;
 
 namespace ElitaShop.API.Controllers
 {
@@ -72,6 +73,16 @@ namespace ElitaShop.API.Controllers
             if (result)
                 return Ok("Sucesfully Updated");
             return BadRequest("Do Not Updated");
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteRangeAsync(List<long> productIds)
+        {
+            bool result = await _productService.DeleteRangeAsync(productIds);
+
+            if (result)
+                return Ok("Sucesfully deleted");
+            return BadRequest("Do Not Deleted");
         }
     }
 }
