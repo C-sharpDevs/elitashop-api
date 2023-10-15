@@ -67,6 +67,7 @@ namespace ElitaShop.Services.Services.Categories
             if (category is null) throw new CategoryNotFoundException();
 
             Category categoryMap = _mapper.Map<Category>(categoryUpdateDto);
+            categoryMap.Id = categoryId;
 
             if (categoryUpdateDto.CategoryImage is not null)
             {
