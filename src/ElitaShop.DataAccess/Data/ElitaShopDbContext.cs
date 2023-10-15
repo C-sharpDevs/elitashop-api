@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
+﻿
 namespace ElitaShop.DataAccess.Data
 {
     public class ElitaShopDbContext : DbContext

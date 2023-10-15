@@ -1,13 +1,10 @@
-﻿using ElitaShop.Domain.Entities.Products;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace ElitaShop.Domain.Entities.Carts
 {
 
     public class CartItem : Auditable
     {
-        public decimal Price { get; set; }
-        public decimal Discount { get; set; }
         public int Quantity { get; set; }
         public string Content { get; set; }
 

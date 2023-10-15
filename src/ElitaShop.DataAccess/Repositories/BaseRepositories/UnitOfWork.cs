@@ -1,6 +1,4 @@
-﻿using ElitaShop.DataAccess.Repositories.EntityRepositories;
-
-namespace ElitaShop.DataAccess.Repositories.BaseRepositories
+﻿namespace ElitaShop.DataAccess.Repositories.BaseRepositories
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -101,7 +99,7 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
         {
             if (!disposing)
             {
-                if(disposing)
+                if (disposing)
                 {
                     _dbContext.Dispose();
                 }
@@ -115,9 +113,9 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
             GC.SuppressFinalize(this);
         }
 
-        public async Task DisposeAsync(bool disposing) 
+        public async Task DisposeAsync(bool disposing)
         {
-            if(!disposing)
+            if (!disposing)
             {
                 await _dbContext.DisposeAsync();
             }
