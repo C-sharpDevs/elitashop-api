@@ -1,5 +1,5 @@
-﻿using ElitaShop.Domain.Exceptions.CartItems;
-using ElitaShop.Services.Interfaces.CartItems;
+﻿using ElitaShop.Services.Interfaces.CartItems;
+using ElitaShop.Domain.Exceptions.CartItems;
 namespace ElitaShop.Services.Services.CartItems
 {
     public class CartItemService : ICartItemService
