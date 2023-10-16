@@ -1,7 +1,4 @@
-﻿using ElitaShop.Services.Interfaces.Products;
-using Microsoft.AspNetCore.Mvc;
-
-namespace ElitaShop.API.Controllers
+﻿namespace ElitaShop.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
@@ -32,6 +29,13 @@ namespace ElitaShop.API.Controllers
             if (result)
                 return Ok("Sucesfully Created");
             return BadRequest("Do Not Deleted");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Get(long categoryId)
+        {
+            List<Product> products = await _productCategoryService.GetAllProductsInTheCategoryAsync(categoryId);
+
+            return Ok(products);
         }
 
         [HttpPost]
