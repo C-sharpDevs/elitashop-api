@@ -1,4 +1,4 @@
-﻿namespace ElitaShop.Services.Interfaces.Product
+﻿namespace ElitaShop.Services.Interfaces.Products
 {
     public interface IProductReviewService
     {
@@ -12,7 +12,7 @@
         Task<bool> DeleteAsync(long productReviewId);
 
         //Get
-        Task<IList<ProductReview>> GetAllAsync(PaginationParams @params);
+        Task<IList<ProductReview>> GetAllAsync();
 
         //GetById
         Task<ProductReview> GetByIdAsync(long productReviewId);

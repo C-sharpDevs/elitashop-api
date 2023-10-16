@@ -12,6 +12,6 @@ namespace ElitaShop.Services.Interfaces.Users
         
         Task<User> GetByIdAsync(long userId);
         
-        Task<IList<User>> GetAllAsync(PaginationParams @params);
+        Task<IList<User>> GetAllAsync();
     }
 }

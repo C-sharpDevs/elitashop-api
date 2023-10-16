@@ -3,6 +3,7 @@ using System;
 using ElitaShop.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ElitaShop.DataAccess.Migrations
 {
     [DbContext(typeof(ElitaShopDbContext))]
-    partial class ElitaShopDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231015144959_PriceDiscountRemoved")]
+    partial class PriceDiscountRemoved
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -463,7 +466,7 @@ namespace ElitaShop.DataAccess.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("UserAvatar")
+                    b.Property<string>("UserImage")
                         .HasColumnType("text");
 
                     b.Property<bool>("Vendor")

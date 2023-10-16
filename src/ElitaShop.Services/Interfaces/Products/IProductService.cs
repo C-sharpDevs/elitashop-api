@@ -1,15 +1,21 @@
-﻿public interface IProductService
+namespace ElitaShop.Services.Interfaces.Products
 {
-    // Append
-    Task<bool> CreateAsync(ProductCreateDto productCreateDto);
+    public interface IProductService
+    {
+        // Append
+        Task<bool> CreateAsync(ProductCreateDto productCreateDto);
 
-    // Update
-    Task<bool> UpdateAsync(long productId, ProductUpdateDto productUpdateDto);
+        // Update
+        Task<bool> UpdateAsync(long productId, ProductUpdateDto productUpdateDto);
+        Task<bool> UpdateImageAsync(long productId, IFormFile productImage);
 
-    // Delete
-    Task<bool> DeleteAsync(long productId);
+        // Delete
+        Task<bool> DeleteAsync(long productId);
+        Task<bool> DeleteRangeAsync(List<long> productIds);
 
-    // Get
-    Task<IEnumerable<Product>> GetAllAsync(PaginationParams @params);
-    Task<Product> GetByIdAsync(long productId);
+        // Get
+        //Task<IEnumerable<Product>> GetAllAsync(PaginationParams @params);
+        Task<List<Product>> GetAllAsync();
+        Task<Product> GetByIdAsync(long productId);
+    }
 }

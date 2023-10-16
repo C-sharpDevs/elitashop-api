@@ -2,11 +2,11 @@
 {
     public interface ICartItemService
     {
-        Task AddItem(CartItemCreateDto item);
-        Task UpdateItem(long cartItemId, CartItemUpdateDto item);
-        Task DeleteItem(long cartItemId);
-        Task<CartItem> GetItem(long cartItemId);
-        Task<List<CartItem>> GetAllItmes();
+        Task<bool> CreateItemAsync(CartItemCreateDto item);
+        Task<bool> UpdateItemAsync(long cartItemId, CartItemUpdateDto item);
+        Task<bool> DeleteItemAsync(long cartItemId);
+        Task<CartItem> GetItemByIdAsync(long cartItemId);
+        Task<List<CartItem>> GetAllItmesAsync(long cartItemId);
         Task<List<CartItem>> GetPageItmesAsync(PaginationParams @params);
     }
 }

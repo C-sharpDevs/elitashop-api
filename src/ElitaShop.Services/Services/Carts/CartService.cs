@@ -8,45 +8,36 @@ namespace ElitaShop.Services.Services.Carts
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICartRepository _cartRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CartService(IUnitOfWork unitOfWork, IMapper mapper)
+        public CartService(IUnitOfWork unitOfWork, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _cartRepository = _unitOfWork.CartRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<bool> CreateAsync(CartCreateDto cartCreateDto)
+        public async Task<bool> CreateAsync(long userId, CartCreateDto cartCreateDto)
         {
             var cart = _mapper.Map<Cart>(cartCreateDto);
-            
+            cart.UserId = userId;
             await _cartRepository.AddAsync(cart);
-            await _unitOfWork.CommitAsync();
-
-            return true;
-        }
-
-        public async Task<bool> DeleteAsync(long cartId)
-        {
-            var cart = _cartRepository.Get(x=> x.Id ==cartId);
-            if(cart == null)
+            var result = await _unitOfWork.CommitAsync();
+           
+            if(result>0)
             {
-                throw new CartNotFoundException();
+                _httpContextAccessor.HttpContext.Response.Headers["cartId"] = cart.Id.ToString();
+                return true;
             }
-            _cartRepository.Remove(cart);
-            await _unitOfWork.CommitAsync();
-            return true;
-        }
-
-        public async Task<List<Cart>> GetAllAsync()
-        {
-            return (List<Cart>)await _cartRepository.GetAllAsync();
+            return false;
         }
 
         public async Task<Cart> GetCartByIdAsync(long cartId)
         {
-            var cart = _cartRepository.Get(x => x.Id == cartId);
-            if(cart == null)
+            var cart = await _cartRepository.GetAsync(x => x.Id == cartId);
+
+            if (cart == null)
             {
                 throw new CartNotFoundException();
             }
@@ -59,19 +50,35 @@ namespace ElitaShop.Services.Services.Carts
             return (List<Cart>)result;
         }
 
-        public async Task<bool> UpdateAsync(long cartId, CartUpdateDto cartUpdateDto)
+        public async Task<bool> DeleteAsync(long cartId)
         {
-            var cart = _cartRepository.Get(x=>x.Id == cartId);
-            if(cart == null)
+            var cart = await GetCartByIdAsync(cartId);
+            
+            if (cart == null)
             {
                 throw new CartNotFoundException();
             }
-            var newCart = _mapper.Map<Cart>(cartUpdateDto);
-            newCart.Id = cartId;
-            _cartRepository.Update(newCart);
-            await _unitOfWork.CommitAsync();
-            return true;
+            
+            _cartRepository.Remove(cart);
+            var result = await _unitOfWork.CommitAsync();
 
+            return result > 0;
+        }
+
+
+        public async Task<bool> UpdateAsync(long cartId, CartUpdateDto cartUpdateDto)
+        {
+            var cart = await GetCartByIdAsync(cartId);
+            cart = _mapper.Map<Cart>(cartUpdateDto);
+            cart.UpdatedAt = DateTime.UtcNow;
+            var result = await _unitOfWork.CommitAsync();
+            return result > 0;
+
+        }
+
+        public async Task<List<Cart>> GetAllAsync(long userId)
+        {
+            return (List<Cart>)await _cartRepository.GetAllAsync(x => x.UserId == userId);
         }
     }
 }

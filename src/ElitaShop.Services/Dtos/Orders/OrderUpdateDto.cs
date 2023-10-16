@@ -1,4 +1,6 @@
-﻿namespace ElitaShop.Services.Dtos.Orders
+﻿using ElitaShop.Domain.Enums;
+
+namespace ElitaShop.Services.Dtos.Orders
 {
     public class OrderUpdateDto
     {
