@@ -19,6 +19,11 @@
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.ProductId, opt => opt.Ignore())
                 .ForMember(dest => dest.CartId, opt => opt.Ignore());
+            CreateMap<CartItem, CartItemGetDto>()
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product.Price))
+                .ForMember(dest => dest.Disount, opt => opt.MapFrom(src => src.Product.Discount))
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Title))
+                .ForMember(dest => dest.ProductDescription, opt => opt.MapFrom(src => src.Product.Description));
 
             // Category
             CreateMap<CategoryCreateDto, Category>();
