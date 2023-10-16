@@ -33,7 +33,7 @@ namespace ElitaShop.API.Controllers
             return BadRequest("Not Found Category");
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(long categoryId[FromForm]CategoryUpdateDto categoryUpdateDto)
+        public async Task<IActionResult> UpdateAsync(long categoryId,[FromForm]CategoryUpdateDto categoryUpdateDto)
         {
             bool result = await _categoryService.UpdateAsync(categoryId,categoryUpdateDto);
 

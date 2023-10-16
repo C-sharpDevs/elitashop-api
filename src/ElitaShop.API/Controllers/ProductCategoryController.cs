@@ -30,6 +30,13 @@
                 return Ok("Sucesfully Created");
             return BadRequest("Do Not Deleted");
         }
+        [HttpGet]
+        public async Task<IActionResult> Get(long categoryId)
+        {
+            List<Product> products = await _productCategoryService.GetAllProductsInTheCategoryAsync(categoryId);
+
+            return Ok(products);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreatedRangeAsync(List<long> prosuctIds, long categoryId)
