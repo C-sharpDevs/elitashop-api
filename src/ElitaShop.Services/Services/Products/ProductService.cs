@@ -62,14 +62,18 @@ namespace ElitaShop.Services.Services.Products
 
             string imagepath = await _fileService.UploadImageAsync(productUpdateDto.ProductImage);
 
-            resultProduct.Title = productUpdateDto.Title;
-            resultProduct.Description = productUpdateDto.Description;
-            resultProduct.MetaTitle = productUpdateDto.MetaTitle;
-            resultProduct.Price = productUpdateDto.Price;
-            resultProduct.Discount = productUpdateDto.Discount;
-            resultProduct.Quantity = productUpdateDto.Quantity;
-            resultProduct.ProductImage = imagepath;
+            resultProduct = _mapper.Map<Product>(productUpdateDto);
             resultProduct.UpdatedAt = DateTime.UtcNow;
+            resultProduct.ProductImage = imagepath;
+
+            //resultProduct.Title = productUpdateDto.Title;
+            //resultProduct.Description = productUpdateDto.Description;
+            //resultProduct.MetaTitle = productUpdateDto.MetaTitle;
+            //resultProduct.Price = productUpdateDto.Price;
+            //resultProduct.Discount = productUpdateDto.Discount;
+            //resultProduct.Quantity = productUpdateDto.Quantity;
+            //resultProduct.ProductImage = imagepath;
+            //resultProduct.UpdatedAt = DateTime.UtcNow;
 
             _productRepository.Update(resultProduct);
             int res = await _unitOfWork.CommitAsync();

@@ -66,7 +66,7 @@ namespace ElitaShop.Services.Services.Categories
             Category category = await _categoryRepository.GetAsync(category => category.Id == categoryId);
             if (category is null) throw new CategoryNotFoundException();
 
-            Category categoryMap = _mapper.Map<Category>(categoryUpdateDto);
+            category = _mapper.Map<Category>(categoryUpdateDto);
 
             if (categoryUpdateDto.CategoryImage is not null)
             {
@@ -74,12 +74,12 @@ namespace ElitaShop.Services.Services.Categories
                 if (image == false) throw new ImageNotFoundException();
 
                 string newImagePath = await _fileService.UploadImageAsync(categoryUpdateDto.CategoryImage);
-                categoryMap.CategoryImage = newImagePath;
+                category.CategoryImage = newImagePath;
             }
 
-            categoryMap.UpdatedAt = DateTime.UtcNow;
+            category.UpdatedAt = DateTime.UtcNow;
 
-            _categoryRepository.Update(categoryMap);
+            _categoryRepository.Update(category);
             int result = await _unitOfWork.CommitAsync();
 
             return result > 0;
