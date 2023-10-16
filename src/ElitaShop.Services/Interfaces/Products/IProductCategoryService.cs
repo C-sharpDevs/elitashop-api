@@ -12,7 +12,7 @@
 
     // Get
     //Task<List<Product>> GetAllProductsInTheCategoryAsync(long categoryId, PaginationParams @params);
-    Task<List<Product>> GetAllProductsInTheCategoryAsync(long categoryId);
+        Task<List<Product>> GetAllProductsInTheCategoryAsync(long categoryId);
 
         //Update
         Task<bool> UpdateProductCategoryAsync(long productId, long oldCategoryId, long newCategoryId);

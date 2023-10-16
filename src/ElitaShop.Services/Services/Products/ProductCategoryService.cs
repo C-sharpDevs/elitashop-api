@@ -98,7 +98,9 @@ namespace ElitaShop.Services.Services.Products
 
         public async Task<List<Product>> GetAllProductsInTheCategoryAsync(long categoryId)
         {
-            throw new NotImplementedException();
+            List<Product> product = await _productCategoryRepository.GetAllProductsInTheCategoryAsync(categoryId);
+
+            return product;
         }
 
         public async Task<bool> UpdateProductCategoryAsync(long productId, long oldCategoryId, long newCategoryId)
