@@ -42,7 +42,7 @@ namespace ElitaShop.Services.Services.Common
             string subPath = Path.Combine(MEDIA, AVATARS, newAvatarName);
             string path = Path.Combine(ROOTPATH, subPath);
 
-            using (var stream = new FileStream(path, FileMode.Open))
+            using (var stream = new FileStream(path, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
                 return subPath;

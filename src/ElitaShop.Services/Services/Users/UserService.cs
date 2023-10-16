@@ -29,10 +29,10 @@ namespace ElitaShop.Services.Services.Users
 
         public async Task<bool> CreateAsync(UserCreateDto userCreateDto)
         {
-            string imagePath =   await _fileService.UploadAvatarAsync(userCreateDto.UserAvatar);
+            string imagePath = await _fileService.UploadAvatarAsync(userCreateDto.UserAvatar);
 
             User user = _mapper.Map<User>(userCreateDto);
-            //user.UserAvatar = imagePath;
+            user.UserAvatar = imagePath;
 
             await _userRepository.AddAsync(user);
             int result = await _unitOfWork.CommitAsync();

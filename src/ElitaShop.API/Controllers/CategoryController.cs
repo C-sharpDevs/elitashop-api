@@ -1,10 +1,4 @@
-﻿using ElitaShop.Domain.Entities.Categories;
-using ElitaShop.Services.Dtos.Categories;
-using ElitaShop.Services.Interfaces.Categories;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing.Constraints;
-
-namespace ElitaShop.API.Controllers
+﻿namespace ElitaShop.API.Controllers
 {
     [Route("api/[Controller]/[action]")]
     [ApiController]
@@ -33,9 +27,9 @@ namespace ElitaShop.API.Controllers
             return BadRequest("Not Found Category");
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync(long categoryId,[FromForm]CategoryUpdateDto categoryUpdateDto)
+        public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto categoryUpdateDto)
         {
-            bool result = await _categoryService.UpdateAsync(categoryId,categoryUpdateDto);
+            bool result = await _categoryService.UpdateAsync(categoryId, categoryUpdateDto);
 
             if (result)
                 return Ok("Sucesfully Updated");
