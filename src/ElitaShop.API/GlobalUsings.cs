@@ -17,3 +17,7 @@ global using ElitaShop.Services.Services.Common;
 global using ElitaShop.Services.Services.Common.AutoMapper;
 global using ElitaShop.Services.Services.Products;
 global using Microsoft.EntityFrameworkCore;
+global using ElitaShop.Domain.Entities.Categories;
+global using ElitaShop.Services.Dtos.Categories;
+global using ElitaShop.Services.Interfaces.Users;
+global using ElitaShop.Services.Services.Users;
