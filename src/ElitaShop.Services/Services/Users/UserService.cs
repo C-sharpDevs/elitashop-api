@@ -16,12 +16,12 @@ namespace ElitaShop.Services.Services.Users
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileService _fileService;
 
-        public UserService(IUserRepository userRepository,
+        public UserService(
             IMapper mapper,
             IUnitOfWork unitOfWork,
             IFileService fileService)
         {
-            this._userRepository = userRepository;
+            this._userRepository = unitOfWork.UserRepository;
             this._mapper = mapper;
             this._unitOfWork = unitOfWork;
             this._fileService = fileService;
@@ -32,12 +32,12 @@ namespace ElitaShop.Services.Services.Users
             string imagePath =   await _fileService.UploadAvatarAsync(userCreateDto.UserAvatar);
 
             User user = _mapper.Map<User>(userCreateDto);
-            user.UserImage = imagePath;
+            //user.UserAvatar = imagePath;
 
             await _userRepository.AddAsync(user);
             int result = await _unitOfWork.CommitAsync();
 
-            return result > 0;
+            return result != 0;
 
         }
 
@@ -46,7 +46,7 @@ namespace ElitaShop.Services.Services.Users
             User user = await _userRepository.GetAsync(user => user.Id == userId);
             if (user is null) throw new UserNotFoundException();
 
-            var image = await _fileService.DeleteAvatarAsync(user.UserImage);
+            var image = await _fileService.DeleteAvatarAsync(user.UserAvatar);
             if (image == false) throw new ImageNotFoundException();
 
             _userRepository.Remove(user);
@@ -55,9 +55,9 @@ namespace ElitaShop.Services.Services.Users
             return result > 0;
         }
 
-        public async Task<IList<User>> GetAllAsync(PaginationParams @params)
+        public async Task<IList<User>> GetAllAsync()
         {
-            var users = await _userRepository.GetPageItemsAsync(@params);
+            var users = await _userRepository.GetAllAsync();
             return users.ToList();
         }
 
@@ -75,14 +75,15 @@ namespace ElitaShop.Services.Services.Users
             if (user is null) throw new UserNotFoundException();
 
             User userMap = _mapper.Map<User>(userUpdateDto);
+            userMap.Id = userId;
 
             if(userUpdateDto.UserAvatar is not null)
             {
-                var image = await _fileService.DeleteAvatarAsync(user.UserImage);
+                var image = await _fileService.DeleteAvatarAsync(user.UserAvatar);
                 if(image == false) throw new ImageNotFoundException();
 
                 string newImagePath = await _fileService.UploadImageAsync(userUpdateDto.UserAvatar);
-                userMap.UserImage = newImagePath;
+                userMap.UserAvatar = newImagePath;
             }
 
             userMap.UpdatedAt = DateTime.UtcNow;

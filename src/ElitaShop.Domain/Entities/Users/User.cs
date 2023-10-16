@@ -14,7 +14,7 @@ namespace ElitaShop.Domain.Entities.Users
         public bool Vendor {get; set; }
         public DateTime LastLogin { get; set; } = DateTime.UtcNow;
         public string? Intro { get; set; }
-        public string? UserImage { get; set; }
+        public string? UserAvatar { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Cart> Carts { get; set; } 
     }
