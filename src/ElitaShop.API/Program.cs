@@ -7,12 +7,14 @@ using ElitaShop.Services.Interfaces.Categories;
 using ElitaShop.Services.Interfaces.Common;
 
 using ElitaShop.Services.Interfaces.Products;
+using ElitaShop.Services.Interfaces.Users;
 using ElitaShop.Services.Services.CartItems;
 using ElitaShop.Services.Services.Carts;
 using ElitaShop.Services.Services.Categories;
 using ElitaShop.Services.Services.Common;
 using ElitaShop.Services.Services.Common.AutoMapper;
 using ElitaShop.Services.Services.Products;
+using ElitaShop.Services.Services.Users;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -29,11 +31,13 @@ builder.Services.AddDbContext<ElitaShopDbContext>(options => options.UseNpgsql(b
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddTransient<IFileService, FileService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICartItemService, CartItemService>();
 builder.Services.AddScoped<ICategoryService,CategoryService>();
 builder.Services.AddScoped<IProductReviewService, ProductReviewService>();
+
 
 
 var app = builder.Build();
