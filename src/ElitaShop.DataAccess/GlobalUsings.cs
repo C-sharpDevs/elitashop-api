@@ -9,3 +9,4 @@ global using ElitaShop.Domain.Entities.Users;
 global using ElitaShop.Domain.Entities.Orders;
 global using ElitaShop.DataAccess.Repositories.EntityRepositories;
 global using Microsoft.EntityFrameworkCore;
+global using System.Linq.Expressions;
