@@ -1,6 +1,7 @@
 ﻿global using ElitaShop.Services.Dtos.Carts;
 global using ElitaShop.Services.Dtos.Products;
 global using ElitaShop.Domain.Entities.Products;
+global using ElitaShop.Domain.Entities.Categories;
 global using ElitaShop.DataAccess.Data;
 global using ElitaShop.DataAccess.Interfaces.BaseRepositories;
 global using ElitaShop.DataAccess.Repositories.BaseRepositories;
@@ -19,3 +20,6 @@ global using ElitaShop.Services.Services.Products;
 global using ElitaShop.Services.Services.Users;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.AspNetCore.Mvc;
+
+
+
