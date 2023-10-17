@@ -38,7 +38,7 @@ namespace ElitaShop.Services.Services.Common
 
         public async Task<string> UploadAvatarAsync(IFormFile file)
         {
-            string newAvatarName = MediaHelper.MakeImageName(file.FileName);
+            string newAvatarName = MediaHelper.MakeImageName(file.FileName.ToLower());
             string subPath = Path.Combine(MEDIA, AVATARS, newAvatarName);
             string path = Path.Combine(ROOTPATH, subPath);
 
@@ -51,7 +51,7 @@ namespace ElitaShop.Services.Services.Common
 
         public async Task<string> UploadImageAsync(IFormFile file)
         {
-            string newImageName = MediaHelper.MakeImageName(file.FileName);
+            string newImageName = MediaHelper.MakeImageName(file.FileName.ToLower());
             string subPath = Path.Combine(MEDIA, IMAGES, newImageName);
             string path = Path.Combine(ROOTPATH, subPath);
 
