@@ -1,5 +1,7 @@
 ﻿global using ElitaShop.Services.Dtos.Carts;
 global using ElitaShop.Services.Dtos.Products;
+global using ElitaShop.Services.Dtos.Categories;
+
 global using ElitaShop.Domain.Entities.Products;
 global using ElitaShop.Domain.Entities.Categories;
 global using ElitaShop.DataAccess.Data;
