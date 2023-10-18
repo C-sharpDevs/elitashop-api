@@ -61,5 +61,11 @@ namespace ElitaShop.Services.Services.Common
                 return subPath;
             }
         }
+        public async Task<byte[]> LoadImageAsync(string filepath)
+        {
+            string path = Path.Combine(ROOTPATH, filepath);
+            byte[] imageBytes = await File.ReadAllBytesAsync(path);
+            return imageBytes;
+        }
     }
 }
