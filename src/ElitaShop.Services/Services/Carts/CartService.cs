@@ -27,7 +27,7 @@ namespace ElitaShop.Services.Services.Carts
            
             if(result>0)
             {
-                _httpContextAccessor.HttpContext.Response.Headers["cartId"] = cart.Id.ToString();
+                //_httpContextAccessor.HttpContext.Response.Headers["cartId"] = cart.Id.ToString();
                 return true;
             }
             return false;

@@ -1,7 +1,5 @@
-﻿using ElitaShop.Services.Interfaces.CartItems;
-using ElitaShop.Domain.Exceptions.CartItems;
-using ElitaShop.DataAccess.Interfaces.BaseRepositories;
-using ElitaShop.DataAccess.Interfaces.EntityRepositories;
+﻿using ElitaShop.Domain.Exceptions.CartItems;
+using ElitaShop.Services.Interfaces.CartItems;
 
 namespace ElitaShop.Services.Services.CartItems
 {
@@ -20,14 +18,19 @@ namespace ElitaShop.Services.Services.CartItems
             _cartItemRepository = _unitOfWork.CartItemRepository;
             _httpContextAccessor = httpContextAccessor;
             var id = _httpContextAccessor.HttpContext.Request.Headers["cartId"].ToString();
-            _cartId = long.Parse(id);
+            //_cartId = long.Parse(id);
         }
 
 
-        public async Task<bool> CreateItemAsync(CartItemCreateDto item)
+        public async Task<bool> CreateItemAsync(long cartId, CartItemCreateDto item)
         {
+            var items = (List<CartItem>)await _cartItemRepository.GetAllAsync(x => x.CartId == cartId);
+            if (items.Any(x => x.ProductId == item.ProductId)) 
+            {
+                throw new Exception();
+            }
             CartItem cartItem = _mapper.Map<CartItem>(item);
-            cartItem.CartId = _cartId;
+            cartItem.CartId = cartId;
 
             _cartItemRepository.Add(cartItem);
             var result = await _unitOfWork.CommitAsync();
@@ -38,7 +41,7 @@ namespace ElitaShop.Services.Services.CartItems
 
         public async Task<bool> DeleteItemAsync(long cartItemId)
         {
-            CartItem cartItem = await GetItemByIdAsync(cartItemId);
+            CartItem cartItem = await _cartItemRepository.GetAsync(x => x.Id == cartItemId);
             _cartItemRepository.Remove(cartItem);
 
             var result = await _unitOfWork.CommitAsync();
@@ -47,17 +50,18 @@ namespace ElitaShop.Services.Services.CartItems
 
         public async Task<List<CartItem>> GetAllItmesAsync(long cartId)
         {
-            return (List<CartItem>)await _cartItemRepository.GetAllAsync(x => x.CartId == _cartId);
+            return (List<CartItem>)await _cartItemRepository.GetAllAsync(x => x.CartId == cartId);
         }
 
-        public async Task<CartItem> GetItemByIdAsync(long cartItemId)
+        public async Task<CartItemGetDto> GetItemByIdAsync(long cartItemId)
         {
-            CartItem cartItem = await _cartItemRepository.GetAsync(x => x.CartId == cartItemId);
+            CartItem cartItem = await _cartItemRepository.GetAsync(x => x.Id == cartItemId);
             if (cartItem == null)
             {
                 throw new CartItemNotFound();
             }
-            return cartItem;
+            CartItemGetDto cartItemGetDto = _mapper.Map<CartItemGetDto>(cartItem);
+            return cartItemGetDto;
         }
 
         public async Task<List<CartItem>> GetPageItmesAsync(PaginationParams @params)
@@ -67,7 +71,7 @@ namespace ElitaShop.Services.Services.CartItems
 
         public async Task<bool> UpdateItemAsync(long cartItemId, CartItemUpdateDto item)
         {
-            CartItem cartItem = await GetItemByIdAsync(cartItemId);
+            CartItem cartItem = await _cartItemRepository.GetAsync(x => x.Id == cartItemId) ?? throw new CartItemNotFound();
             cartItem = _mapper.Map<CartItem>(item);
             cartItem.UpdatedAt = DateTime.UtcNow;
             _cartItemRepository.Update(cartItem);

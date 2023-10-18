@@ -19,6 +19,11 @@
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.ProductId, opt => opt.Ignore())
                 .ForMember(dest => dest.CartId, opt => opt.Ignore());
+            CreateMap<CartItem, CartItemGetDto>()
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Product.Price))
+                .ForMember(dest => dest.Disount, opt => opt.MapFrom(src => src.Product.Discount))
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.Title))
+                .ForMember(dest => dest.ProductDescription, opt => opt.MapFrom(src => src.Product.Description));
 
             // Category
             CreateMap<CategoryCreateDto, Category>();
@@ -49,6 +54,15 @@
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.Admin, opt => opt.Ignore())
                 .ForMember(dest => dest.Vendor, opt => opt.Ignore());
+            CreateMap<User, UserGetDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
+                .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.MiddleName))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.Intro, opt => opt.MapFrom(src => src.Intro))
+                .ForMember(dest => dest.UserAvatar, opt => opt.Ignore());
+
             #endregion
             #region order
             // Order
