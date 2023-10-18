@@ -2,7 +2,6 @@
 {
     public class Product : Auditable
     {
-        public long UserId { get; set; }
         public string Title { get; set; }
         public string MetaTitle { get; set; }
         public string Description { get; set; }
@@ -15,7 +14,6 @@
         public DateTime? EndAt { get; set; }
         public string? ProductImage { get; set; }
 
-        public User User { get; set; }
         public ICollection<ProductCategory> ProductCategories { get; set; }
         public ICollection<CartItem> CartItems { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; }
