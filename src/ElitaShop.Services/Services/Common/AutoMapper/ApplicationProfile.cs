@@ -54,6 +54,15 @@
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.Admin, opt => opt.Ignore())
                 .ForMember(dest => dest.Vendor, opt => opt.Ignore());
+            CreateMap<User, UserGetDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.LastName))
+                .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(src => src.MiddleName))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.Email))
+                .ForMember(dest => dest.Intro, opt => opt.MapFrom(src => src.Intro))
+                .ForMember(dest => dest.UserAvatar, opt => opt.Ignore());
+
             #endregion
             #region order
             // Order
