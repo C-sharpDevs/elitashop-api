@@ -60,6 +60,14 @@
             return user;
         }
 
+        public async Task<UserGetDto> GetImageAsync(long userId)
+        {
+            var user = await GetByIdAsync(userId);
+            var userget = _mapper.Map<UserGetDto>(user);
+            userget.UserAvatar = await _fileService.LoadImageAsync(user.UserAvatar);
+            return userget;
+        }
+
         public async Task<bool> UpdateAsync(long userId, UserUpdateDto userUpdateDto)
         {
             User user = await _userRepository.GetAsync(x => x.Id == userId);

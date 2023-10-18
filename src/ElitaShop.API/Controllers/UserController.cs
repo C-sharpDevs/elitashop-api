@@ -2,6 +2,7 @@
 using ElitaShop.Services.Dtos.User;
 using ElitaShop.Services.Interfaces.Users;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace ElitaShop.API.Controllers
 {
@@ -60,7 +61,12 @@ namespace ElitaShop.API.Controllers
             if (update)
                 return Ok("Updated");
             return BadRequest("Do not Updated");
-
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetImage(long userId)
+        {
+            var res = await _userService.GetImageAsync(userId);
+            return Ok(res);
         }
     }
 }
