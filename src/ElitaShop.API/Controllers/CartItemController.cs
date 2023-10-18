@@ -12,9 +12,9 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetById(long itemId) 
+        public async Task<IActionResult> GetById(long cartItemId) 
         {
-            var result = await _cartItemService.GetItemByIdAsync(itemId);
+            var result = await _cartItemService.GetItemByIdAsync(cartItemId);
             return Ok(result);
         }
         [HttpGet]
@@ -24,9 +24,9 @@
             return Ok(result);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CartItemCreateDto cartItemCreateDto)
+        public async Task<IActionResult> Create(long cartId, CartItemCreateDto cartItemCreateDto)
         {
-            var result = await _cartItemService.CreateItemAsync(cartItemCreateDto);
+            var result = await _cartItemService.CreateItemAsync(cartId, cartItemCreateDto);
             return Ok(result);
         }
         [HttpPut]
