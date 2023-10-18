@@ -1,11 +1,5 @@
-﻿using ElitaShop.DataAccess.Interfaces.BaseRepositories;
-using ElitaShop.DataAccess.Interfaces.EntityRepositories;
-using ElitaShop.DataAccess.Paginations;
-using ElitaShop.Domain.Exceptions.Images;
-using ElitaShop.Domain.Exceptions.Users;
-using ElitaShop.Services.Interfaces.Common;
+﻿using ElitaShop.Domain.Exceptions.Users;
 using ElitaShop.Services.Interfaces.Users;
-using System.Collections;
 
 namespace ElitaShop.Services.Services.Users
 {
@@ -67,6 +61,14 @@ namespace ElitaShop.Services.Services.Users
             if (user is null) throw new UserNotFoundException();
 
             return user;
+        }
+
+        public async Task<UserGetDto> GetImageAsync(long userId)
+        {
+            var user = await GetByIdAsync(userId);
+            var userget = _mapper.Map<UserGetDto>(user);
+            userget.UserAvatar = await _fileService.LoadImageAsync(user.UserAvatar);
+            return userget;
         }
 
         public async Task<bool> UpdateAsync(long userId, UserUpdateDto userUpdateDto)
