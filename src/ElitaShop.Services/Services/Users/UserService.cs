@@ -1,7 +1,4 @@
-﻿using ElitaShop.Domain.Exceptions.Users;
-using ElitaShop.Services.Interfaces.Users;
-
-namespace ElitaShop.Services.Services.Users
+﻿namespace ElitaShop.Services.Services.Users
 {
     public class UserService : IUserService
     {
@@ -73,24 +70,24 @@ namespace ElitaShop.Services.Services.Users
 
         public async Task<bool> UpdateAsync(long userId, UserUpdateDto userUpdateDto)
         {
-            User user = await  _userRepository.GetAsync(user => user.Id == userId);
+            User user = await _userRepository.GetAsync(x => x.Id == userId);
+
             if (user is null) throw new UserNotFoundException();
 
-            User userMap = _mapper.Map<User>(userUpdateDto);
-            userMap.Id = userId;
-
-            if(userUpdateDto.UserAvatar is not null)
+            if (userUpdateDto.UserAvatar is not null)
             {
                 var image = await _fileService.DeleteAvatarAsync(user.UserAvatar);
-                if(image == false) throw new ImageNotFoundException();
+                if (image == false) throw new ImageNotFoundException();
 
-                string newImagePath = await _fileService.UploadImageAsync(userUpdateDto.UserAvatar);
-                userMap.UserAvatar = newImagePath;
+                string newImagePath = await _fileService.UploadAvatarAsync(userUpdateDto.UserAvatar);
+                user.UserAvatar = newImagePath;
             }
 
-            userMap.UpdatedAt = DateTime.UtcNow;
+            user = _mapper.Map<User>(userUpdateDto);
 
-            _userRepository.Update(userMap);
+            user.UpdatedAt = DateTime.UtcNow;
+
+            _userRepository.Update(user);
             int result = await _unitOfWork.CommitAsync();
 
             return result > 0;
