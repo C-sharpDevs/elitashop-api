@@ -80,12 +80,19 @@
                 if (image == false) throw new ImageNotFoundException();
 
                 string newImagePath = await _fileService.UploadAvatarAsync(userUpdateDto.UserAvatar);
+                
                 user.UserAvatar = newImagePath;
             }
 
-            user = _mapper.Map<User>(userUpdateDto);
-
+            user.FirstName = userUpdateDto.FirstName;
+            user.LastName = userUpdateDto.LastName;
+            user.MiddleName = userUpdateDto.MiddleName;
+            user.PhoneNumber = userUpdateDto.PhoneNumber;
+            user.Email = userUpdateDto.Email;
+            user.Password = userUpdateDto.Password;
+            user.Intro = userUpdateDto.Intro;
             user.UpdatedAt = DateTime.UtcNow;
+
 
             _userRepository.Update(user);
             int result = await _unitOfWork.CommitAsync();

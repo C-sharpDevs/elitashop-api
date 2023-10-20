@@ -72,8 +72,11 @@ namespace ElitaShop.Services.Services.CartItems
         public async Task<bool> UpdateItemAsync(long cartItemId, CartItemUpdateDto item)
         {
             CartItem cartItem = await _cartItemRepository.GetAsync(x => x.Id == cartItemId) ?? throw new CartItemNotFound();
-            cartItem = _mapper.Map<CartItem>(item);
+
+            cartItem.Quantity = item.Quantity;
+            cartItem.Content = item.Content;
             cartItem.UpdatedAt = DateTime.UtcNow;
+
             _cartItemRepository.Update(cartItem);
 
             var result = await _unitOfWork.CommitAsync();
