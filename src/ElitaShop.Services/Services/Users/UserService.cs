@@ -1,4 +1,7 @@
-﻿namespace ElitaShop.Services.Services.Users
+﻿using ElitaShop.Services.Dtos.User;
+using ElitaShop.Services.Hash;
+
+namespace ElitaShop.Services.Services.Users
 {
     public class UserService : IUserService
     {
@@ -23,6 +26,7 @@
             string imagePath = await _fileService.UploadAvatarAsync(userCreateDto.UserAvatar);
 
             User user = _mapper.Map<User>(userCreateDto);
+            user.Password = Hash512.ComputeSHA512HashFromString(userCreateDto.Password);
             user.UserAvatar = imagePath;
 
             await _userRepository.AddAsync(user);
@@ -85,6 +89,7 @@
             }
 
             user.FirstName = userUpdateDto.FirstName;
+            user.Password = Hash512.ComputeSHA512HashFromString(userUpdateDto.Password);
             user.LastName = userUpdateDto.LastName;
             user.MiddleName = userUpdateDto.MiddleName;
             user.PhoneNumber = userUpdateDto.PhoneNumber;
