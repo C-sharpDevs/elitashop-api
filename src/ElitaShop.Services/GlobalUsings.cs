@@ -17,4 +17,6 @@ global using ElitaShop.Services.Dtos.User;
 global using ElitaShop.Services.Interfaces.Common;
 global using Microsoft.AspNetCore.Http;
 global using ElitaShop.Domain.Enums;
+global using ElitaShop.Domain.Exceptions.Users;
+global using ElitaShop.Services.Interfaces.Users;
 

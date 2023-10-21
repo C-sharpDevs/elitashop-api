@@ -18,7 +18,7 @@
             return Ok(result);
         }
         [HttpPost]
-        public async Task<IActionResult> Create(long userId, CartCreateDto cartCreateDto)
+        public async Task<IActionResult> Create([FromForm]long userId, CartCreateDto cartCreateDto)
         {
             var result = await _cartService.CreateAsync(userId, cartCreateDto);
             return Ok(result);

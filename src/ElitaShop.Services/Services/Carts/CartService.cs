@@ -68,9 +68,25 @@ namespace ElitaShop.Services.Services.Carts
 
         public async Task<bool> UpdateAsync(long cartId, CartUpdateDto cartUpdateDto)
         {
-            var cart = await GetCartByIdAsync(cartId);
-            cart = _mapper.Map<Cart>(cartUpdateDto);
+            Cart? cart = await GetCartByIdAsync(cartId);
+
+            if (cart is null) throw new CartNotFoundException();
+
+            cart.FirstName = cartUpdateDto.FirstName;
+            cart.LastName = cartUpdateDto.LastName;
+            cart.MiddleName = cartUpdateDto.MiddleName;
+            cart.PhoneNumber = cartUpdateDto.PhoneNumber;
+            cart.Email = cartUpdateDto.Email;
+            cart.SessionId = cartUpdateDto.SessionId;
+            cart.Status = cartUpdateDto.Status;
+            cart.Address1 = cartUpdateDto.Address1;
+            cart.Address2 = cartUpdateDto.Address2;
+            cart.City = cartUpdateDto.City;
+            cart.Province = cartUpdateDto.Province;
+            cart.Country = cartUpdateDto.Country;
+            cart.Content = cartUpdateDto.Content;
             cart.UpdatedAt = DateTime.UtcNow;
+            
             var result = await _unitOfWork.CommitAsync();
             return result > 0;
 

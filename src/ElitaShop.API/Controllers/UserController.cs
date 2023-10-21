@@ -55,7 +55,7 @@ namespace ElitaShop.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromForm] long userId, UserUpdateDto userUpdateDto)
+        public async Task<IActionResult> UpdateAsync([FromForm] long userId, [FromForm]UserUpdateDto userUpdateDto)
         {
             bool update = await _userService.UpdateAsync(userId, userUpdateDto);
             if (update)
