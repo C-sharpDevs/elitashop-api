@@ -1,8 +1,6 @@
-﻿using ElitaShop.Domain.Entities.Carts;
-
-namespace ElitaShop.Domain.Entities.Users
+﻿namespace ElitaShop.Domain.Entities.Users
 {
-    public class User:Auditable
+    public class User : Auditable
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -11,11 +9,11 @@ namespace ElitaShop.Domain.Entities.Users
         public string Email { get; set; }
         public string Password { get; set; }
         public bool Admin { get; set; }
-        public bool Vendor {get; set; }
+        public bool Vendor { get; set; }
         public DateTime LastLogin { get; set; } = DateTime.UtcNow;
         public string? Intro { get; set; }
         public string? UserAvatar { get; set; }
         public ICollection<Order> Orders { get; set; }
-        public ICollection<Cart> Carts { get; set; } 
+        public ICollection<Cart> Carts { get; set; }
     }
 }

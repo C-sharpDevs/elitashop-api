@@ -1,5 +1,4 @@
-﻿
-namespace ElitaShop.DataAccess.Data
+﻿namespace ElitaShop.DataAccess.Data
 {
     public class ElitaShopDbContext : DbContext
     {
