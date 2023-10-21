@@ -1,5 +1,5 @@
-﻿using ElitaShop.Domain.Exceptions.Users;
-using ElitaShop.Services.Interfaces.Users;
+﻿using ElitaShop.Services.Dtos.User;
+using ElitaShop.Services.Hash;
 
 namespace ElitaShop.Services.Services.Users
 {
@@ -26,6 +26,7 @@ namespace ElitaShop.Services.Services.Users
             string imagePath = await _fileService.UploadAvatarAsync(userCreateDto.UserAvatar);
 
             User user = _mapper.Map<User>(userCreateDto);
+            user.Password = Hash512.ComputeSHA512HashFromString(userCreateDto.Password);
             user.UserAvatar = imagePath;
 
             await _userRepository.AddAsync(user);
@@ -73,24 +74,32 @@ namespace ElitaShop.Services.Services.Users
 
         public async Task<bool> UpdateAsync(long userId, UserUpdateDto userUpdateDto)
         {
-            User user = await  _userRepository.GetAsync(user => user.Id == userId);
+            User user = await _userRepository.GetAsync(x => x.Id == userId);
+
             if (user is null) throw new UserNotFoundException();
 
-            User userMap = _mapper.Map<User>(userUpdateDto);
-            userMap.Id = userId;
-
-            if(userUpdateDto.UserAvatar is not null)
+            if (userUpdateDto.UserAvatar is not null)
             {
                 var image = await _fileService.DeleteAvatarAsync(user.UserAvatar);
-                if(image == false) throw new ImageNotFoundException();
+                if (image == false) throw new ImageNotFoundException();
 
-                string newImagePath = await _fileService.UploadImageAsync(userUpdateDto.UserAvatar);
-                userMap.UserAvatar = newImagePath;
+                string newImagePath = await _fileService.UploadAvatarAsync(userUpdateDto.UserAvatar);
+                
+                user.UserAvatar = newImagePath;
             }
 
-            userMap.UpdatedAt = DateTime.UtcNow;
+            user.FirstName = userUpdateDto.FirstName;
+            user.Password = Hash512.ComputeSHA512HashFromString(userUpdateDto.Password);
+            user.LastName = userUpdateDto.LastName;
+            user.MiddleName = userUpdateDto.MiddleName;
+            user.PhoneNumber = userUpdateDto.PhoneNumber;
+            user.Email = userUpdateDto.Email;
+            user.Password = userUpdateDto.Password;
+            user.Intro = userUpdateDto.Intro;
+            user.UpdatedAt = DateTime.UtcNow;
 
-            _userRepository.Update(userMap);
+
+            _userRepository.Update(user);
             int result = await _unitOfWork.CommitAsync();
 
             return result > 0;

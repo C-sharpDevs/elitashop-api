@@ -62,18 +62,15 @@ namespace ElitaShop.Services.Services.Products
 
             string imagepath = await _fileService.UploadImageAsync(productUpdateDto.ProductImage);
 
-            resultProduct = _mapper.Map<Product>(productUpdateDto);
+            resultProduct.Title = productUpdateDto.Title;
+            resultProduct.MetaTitle = productUpdateDto.MetaTitle;
+            resultProduct.Description = productUpdateDto.Description;
+            resultProduct.Price = productUpdateDto.Price;
+            resultProduct.Discount = productUpdateDto.Discount;
+            resultProduct.Quantity = productUpdateDto.Quantity;
+            resultProduct.IsShop = productUpdateDto.IsShop;
             resultProduct.UpdatedAt = DateTime.UtcNow;
             resultProduct.ProductImage = imagepath;
-
-            //resultProduct.Title = productUpdateDto.Title;
-            //resultProduct.Description = productUpdateDto.Description;
-            //resultProduct.MetaTitle = productUpdateDto.MetaTitle;
-            //resultProduct.Price = productUpdateDto.Price;
-            //resultProduct.Discount = productUpdateDto.Discount;
-            //resultProduct.Quantity = productUpdateDto.Quantity;
-            //resultProduct.ProductImage = imagepath;
-            //resultProduct.UpdatedAt = DateTime.UtcNow;
 
             _productRepository.Update(resultProduct);
             int res = await _unitOfWork.CommitAsync();
@@ -115,7 +112,7 @@ namespace ElitaShop.Services.Services.Products
 
         public async Task<bool> DeleteRangeAsync(List<long> productIds)
         {
-            foreach(long id in  productIds)
+            foreach (long id in productIds)
             {
                 Product? product = await _productRepository.GetAsync(prod => prod.Id == id);
 
