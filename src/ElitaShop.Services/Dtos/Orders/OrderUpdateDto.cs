@@ -1,4 +1,5 @@
 ﻿using ElitaShop.Domain.Enums;
+using ElitaShop.Services.CustomAttributes;
 
 namespace ElitaShop.Services.Dtos.Orders
 {
