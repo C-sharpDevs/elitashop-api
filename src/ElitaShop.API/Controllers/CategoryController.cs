@@ -1,14 +1,19 @@
-﻿namespace ElitaShop.API.Controllers
+﻿using ElitaShop.DataAccess.Paginations;
+
+namespace ElitaShop.API.Controllers
 {
     [Route("api/[Controller]/[action]")]
     [ApiController]
     public class CategoryController : Controller
     {
         private ICategoryService _categoryService;
+        private readonly int maxPage = 25;
+
         public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] CategoryCreateDto categoryCreateDto)
         {
@@ -18,6 +23,7 @@
             return BadRequest("Do not Created");
 
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
@@ -26,6 +32,14 @@
                 return Ok(category);
             return BadRequest("Not Found Category");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPageItemsAsync([FromForm] int page = 1)
+        {
+            var categories = await _categoryService.GetPageItmesAsync(new PaginationParams(page, maxPage));
+            return Ok(categories);
+        }
+
         [HttpPut]
         public async Task<IActionResult> UpdateAsync(long categoryId, [FromForm] CategoryUpdateDto categoryUpdateDto)
         {
@@ -35,6 +49,7 @@
                 return Ok("Sucesfully Updated");
             return BadRequest("Do Not Updated");
         }
+
         [HttpGet]
         public async Task<IActionResult> GetByIdAsync(long categoryId)
         {
@@ -43,6 +58,7 @@
                 return Ok(category);
             return BadRequest("Not found Category");
         }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(long categoryId)
         {
