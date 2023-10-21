@@ -16,7 +16,7 @@ namespace ElitaShop.Services.Interfaces.Users
 
         Task<UserGetDto> GetImageAsync(long userId);
         
-        Task<List<CartItem>> GetPageItmesAsync(PaginationParams @params);
+        Task<List<User>> GetPageItmesAsync(PaginationParams @params);
 
     }
 }

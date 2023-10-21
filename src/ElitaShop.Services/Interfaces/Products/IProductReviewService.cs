@@ -17,6 +17,6 @@
         //GetById
         Task<ProductReview> GetByIdAsync(long productReviewId);
 
-        Task<List<CartItem>> GetPageItmesAsync(PaginationParams @params);
+        Task<List<ProductReview>> GetPageItmesAsync(PaginationParams @params);
     }
 }
