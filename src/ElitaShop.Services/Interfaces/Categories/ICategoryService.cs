@@ -14,6 +14,6 @@ namespace ElitaShop.Services.Interfaces.Categories
         
         Task<IList<Category>> GetAllAsync();
 
-        Task<List<CartItem>> GetPageItmesAsync(PaginationParams @params);
+        Task<List<Category>> GetPageItmesAsync(PaginationParams @params);
     }
 }
