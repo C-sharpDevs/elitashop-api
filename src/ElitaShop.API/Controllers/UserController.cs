@@ -1,8 +1,6 @@
-﻿using ElitaShop.Domain.Entities.Users;
+﻿using ElitaShop.DataAccess.Paginations;
+using ElitaShop.Domain.Entities.Users;
 using ElitaShop.Services.Dtos.User;
-using ElitaShop.Services.Interfaces.Users;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace ElitaShop.API.Controllers
 {
@@ -10,20 +8,22 @@ namespace ElitaShop.API.Controllers
     [ApiController]
     public class UserController : Controller
     {
-        IUserService _userService;
+        private readonly IUserService _userService;
+        private readonly int maxPage = 25;
+
         public UserController(IUserService userService)
         {
             _userService = userService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatAsync([FromForm] UserCreateDto userCreateDto)
+        public async Task<IActionResult> CreatAsync([FromQuery] UserCreateDto userCreateDto)
         {
             var user = await _userService.CreateAsync(userCreateDto);
-            if(user)
+            if (user)
                 return Ok("Created");
             return BadRequest("Do not Created");
-               
+
         }
 
         [HttpGet]
@@ -34,6 +34,7 @@ namespace ElitaShop.API.Controllers
                 return Ok(users);
             return BadRequest("Not Found User");
         }
+
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(long userId)
         {
@@ -44,6 +45,14 @@ namespace ElitaShop.API.Controllers
 
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPageItemsAsync([FromForm] int page = 1)
+        {
+            var users = await _userService.GetPageItmesAsync(new PaginationParams(page, maxPage));
+            return Ok(users);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetByIdAsync(long userId)
         {
@@ -55,13 +64,14 @@ namespace ElitaShop.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateAsync([FromForm] long userId, [FromForm]UserUpdateDto userUpdateDto)
+        public async Task<IActionResult> UpdateAsync([FromForm] long userId, [FromForm] UserUpdateDto userUpdateDto)
         {
             bool update = await _userService.UpdateAsync(userId, userUpdateDto);
             if (update)
                 return Ok("Updated");
             return BadRequest("Do not Updated");
         }
+
         [HttpGet]
         public async Task<IActionResult> GetImage(long userId)
         {

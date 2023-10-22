@@ -1,10 +1,13 @@
-﻿namespace ElitaShop.API.Controllers
+﻿using ElitaShop.DataAccess.Paginations;
+
+namespace ElitaShop.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class CartItemController : Controller
     {
         private readonly ICartItemService _cartItemService;
+        private readonly int maxPage = 25;
 
         public CartItemController(ICartItemService cartItemService)
         {
@@ -17,6 +20,14 @@
             var result = await _cartItemService.GetItemByIdAsync(cartItemId);
             return Ok(result);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPageItemsAsync([FromQuery] int page = 1)
+        {
+            var result = await _cartItemService.GetPageItmesAsync(new PaginationParams(page, maxPage));
+            return Ok(result);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetAll(long cartId)
         {

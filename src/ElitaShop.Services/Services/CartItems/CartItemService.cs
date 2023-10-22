@@ -6,14 +6,20 @@ namespace ElitaShop.Services.Services.CartItems
     public class CartItemService : ICartItemService
     {
         private readonly IMapper _mapper;
+        private readonly IPaginator _paginator;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICartItemRepository _cartItemRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly long _cartId;
 
-        public CartItemService(IMapper mapper, IUnitOfWork unitOfWork, IHttpContextAccessor httpContextAccessor)
+        public CartItemService(
+            IMapper mapper, 
+            IPaginator paginator,
+            IUnitOfWork unitOfWork, 
+            IHttpContextAccessor httpContextAccessor)
         {
             _mapper = mapper;
+            _paginator = paginator;
             _unitOfWork = unitOfWork;
             _cartItemRepository = _unitOfWork.CartItemRepository;
             _httpContextAccessor = httpContextAccessor;
@@ -66,7 +72,10 @@ namespace ElitaShop.Services.Services.CartItems
 
         public async Task<List<CartItem>> GetPageItmesAsync(PaginationParams @params)
         {
-            return (List<CartItem>)await _cartItemRepository.GetPageItemsAsync(@params);
+            var cartItems = await _cartItemRepository.GetPageItemsAsync(@params);
+            var count = await _cartItemRepository.CountAsync();
+            _paginator.Paginate(count, @params);
+            return (List<CartItem>)cartItems;
         }
 
         public async Task<bool> UpdateItemAsync(long cartItemId, CartItemUpdateDto item)

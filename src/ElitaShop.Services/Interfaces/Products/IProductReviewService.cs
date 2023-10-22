@@ -16,5 +16,7 @@
 
         //GetById
         Task<ProductReview> GetByIdAsync(long productReviewId);
+
+        Task<List<ProductReview>> GetPageItmesAsync(PaginationParams @params);
     }
 }
