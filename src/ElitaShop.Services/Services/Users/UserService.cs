@@ -7,16 +7,19 @@ namespace ElitaShop.Services.Services.Users
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IPaginator _paginator;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileService _fileService;
 
         public UserService(
             IMapper mapper,
+            IPaginator paginator,
             IUnitOfWork unitOfWork,
             IFileService fileService)
         {
             this._userRepository = unitOfWork.UserRepository;
             this._mapper = mapper;
+            this._paginator = paginator;
             this._unitOfWork = unitOfWork;
             this._fileService = fileService;
         }
@@ -70,6 +73,14 @@ namespace ElitaShop.Services.Services.Users
             var userget = _mapper.Map<UserGetDto>(user);
             userget.UserAvatar = await _fileService.LoadImageAsync(user.UserAvatar);
             return userget;
+        }
+
+        public async Task<List<User>> GetPageItmesAsync(PaginationParams @params)
+        {
+            var users = await _userRepository.GetPageItemsAsync(@params);
+            var count = await _userRepository.CountAsync();
+            _paginator.Paginate(count, @params);
+            return (List<User>) users;
         }
 
         public async Task<bool> UpdateAsync(long userId, UserUpdateDto userUpdateDto)
