@@ -5,6 +5,7 @@ namespace ElitaShop.DataAccess.Interfaces.BaseRepositories
 {
     public interface IRepository<T> where T : class
     {
+        long Count();
         T Get(Expression<Func<T, bool>> expression);
         IEnumerable<T> GetAll();
         IEnumerable<T> GetAll(Expression<Func<T, bool>> expression);
@@ -14,6 +15,7 @@ namespace ElitaShop.DataAccess.Interfaces.BaseRepositories
         void RemoveRange(IEnumerable<T> entities);
         void Update(T entity);
         void UpdateRange(IEnumerable<T> entities);
+        Task<long> CountAsync();
         Task<T> GetAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
         Task<IEnumerable<T>> GetPageItemsAsync(PaginationParams paginationParams);
         Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default);

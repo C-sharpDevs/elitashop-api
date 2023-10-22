@@ -1,3 +1,5 @@
+using ElitaShop.DataAccess.Paginations;
+
 namespace ElitaShop.API.Controllers
 {
     [Route("api/[controller]/[action]")]
@@ -5,6 +7,8 @@ namespace ElitaShop.API.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+        private readonly int maxPage = 25;
+
         public ProductController(IProductService productService)
         {
             _productService = productService;
@@ -55,6 +59,13 @@ namespace ElitaShop.API.Controllers
             if (product != null)
                 return Ok(product);
             return BadRequest("Product Not Found");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPageItemsAsync([FromForm] int page = 1)
+        {
+            var products = await _productService.GetPageItmesAsync(new PaginationParams(page, maxPage));
+            return Ok(products);
         }
 
         [HttpPatch]

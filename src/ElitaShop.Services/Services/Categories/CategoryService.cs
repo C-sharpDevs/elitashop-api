@@ -7,16 +7,19 @@ namespace ElitaShop.Services.Services.Categories
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
+        private readonly IPaginator _paginator;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileService _fileService;
 
         public CategoryService(
             IMapper mapper,
+            IPaginator paginator,
             IUnitOfWork unitOfWork,
             IFileService fileService)
         {
             this._categoryRepository = unitOfWork.CategoryRepository;
             this._mapper = mapper;
+            this._paginator = paginator;
             this._unitOfWork = unitOfWork;
             this._fileService = fileService;
         }
@@ -61,6 +64,14 @@ namespace ElitaShop.Services.Services.Categories
             return category;
         }
 
+        public  async Task<List<Category>> GetPageItmesAsync(PaginationParams @params)
+        {
+            var categories = await _categoryRepository.GetAllAsync();
+            var count = await _categoryRepository.CountAsync();
+            _paginator.Paginate(count, @params);
+            return (List<Category>)categories;
+        }
+
         public async Task<bool> UpdateAsync(long categoryId, CategoryUpdateDto categoryUpdateDto)
         {
             Category category = await _categoryRepository.GetAsync(category => category.Id == categoryId);
@@ -88,3 +99,5 @@ namespace ElitaShop.Services.Services.Categories
 
     }
 }
+
+
