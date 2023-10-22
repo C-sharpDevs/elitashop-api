@@ -17,7 +17,7 @@ namespace ElitaShop.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatAsync([FromForm] UserCreateDto userCreateDto)
+        public async Task<IActionResult> CreatAsync([FromQuery] UserCreateDto userCreateDto)
         {
             var user = await _userService.CreateAsync(userCreateDto);
             if (user)
