@@ -17,5 +17,6 @@ namespace ElitaShop.Services.Interfaces.Products
         //Task<IEnumerable<Product>> GetAllAsync(PaginationParams @params);
         Task<List<Product>> GetAllAsync();
         Task<Product> GetByIdAsync(long productId);
+        Task<List<Product>> GetPageItmesAsync(PaginationParams @params);
     }
 }

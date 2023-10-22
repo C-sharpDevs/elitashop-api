@@ -14,6 +14,12 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
             _entitySet = _dbContext.Set<T>();
 
         }
+
+        public long Count()
+        {
+            return _entitySet.Count();
+        }
+
         public void Add(T entity)
         {
             _dbContext.Add(entity);
@@ -47,6 +53,11 @@ namespace ElitaShop.DataAccess.Repositories.BaseRepositories
         public virtual IEnumerable<T> GetAll(Expression<Func<T, bool>> expression)
         {
             return _entitySet.Where(expression).AsEnumerable();
+        }
+
+        public async Task<long> CountAsync()
+        {
+            return await _entitySet.CountAsync();
         }
 
         public virtual async Task<IEnumerable<T>> GetPageItemsAsync(PaginationParams paginationParams)

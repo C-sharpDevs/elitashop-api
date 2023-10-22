@@ -7,12 +7,18 @@ namespace ElitaShop.Services.Services.Products
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
+        private readonly IPaginator _paginator;
         private readonly IFileService _fileService;
 
-        public ProductService(IUnitOfWork unitOfWork, IMapper mapper, IFileService fileService)
+        public ProductService(
+            IMapper mapper, 
+            IPaginator paginator,
+            IUnitOfWork unitOfWork, 
+            IFileService fileService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _paginator = paginator;
             _productRepository = unitOfWork.ProductRepository;
             _fileService = fileService;
         }
@@ -99,6 +105,14 @@ namespace ElitaShop.Services.Services.Products
             IEnumerable<Product>? products = await _productRepository.GetAllAsync();
 
             return products.ToList();
+        }
+
+        public async Task<List<Product>> GetPageItmesAsync(PaginationParams @params)
+        {
+            var products = await _productRepository.GetPageItemsAsync(@params);
+            var count = await _productRepository.CountAsync();
+            _paginator.Paginate(count, @params);
+            return (List<Product>)products;
         }
 
         public async Task<Product> GetByIdAsync(long productId)

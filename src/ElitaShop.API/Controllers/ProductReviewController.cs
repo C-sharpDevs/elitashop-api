@@ -1,10 +1,14 @@
-﻿namespace ElitaShop.API.Controllers
+﻿using ElitaShop.DataAccess.Paginations;
+
+namespace ElitaShop.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class ProductReviewController : Controller
     {
         private readonly IProductReviewService _productReviewService;
+        private readonly int maxPage = 25;
+
         public ProductReviewController(IProductReviewService productReviewService)
         {
             _productReviewService = productReviewService;
@@ -25,6 +29,14 @@
                 return Ok(result);
             return BadRequest("Not found ProductReview");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetPageItemsAsync([FromQuery] int page = 1)
+        {
+            var result = await _productReviewService.GetPageItmesAsync(new PaginationParams(page, maxPage));
+            return Ok(result);
+        }
+
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllAsync()
         {

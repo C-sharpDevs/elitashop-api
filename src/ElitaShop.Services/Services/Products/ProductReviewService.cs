@@ -6,13 +6,16 @@ namespace ElitaShop.Services.Services.Products
     {
         private readonly IProductReviewRepository _productReviewRepository;
         private readonly IMapper _mapper;
+        private readonly IPaginator _paginator;
         private readonly IUnitOfWork _unitOfWork;
         public ProductReviewService(
             IMapper mapper,
+            IPaginator paginator,
             IUnitOfWork unitOfWork)
         {
             _productReviewRepository = unitOfWork.ProductReviewRepository;
             _mapper = mapper;
+            _paginator = paginator;
             _unitOfWork = unitOfWork;
         }
         public async Task<bool> CreateAsync(ProductReviewCreateDto productReviewCreateDto)
@@ -44,6 +47,14 @@ namespace ElitaShop.Services.Services.Products
             return productReviews.ToList();
         }
 
+        public async Task<List<ProductReview>> GetPageItmesAsync(PaginationParams @params)
+        {
+            var reviews = await _productReviewRepository.GetPageItemsAsync(@params);
+            var count = await _productReviewRepository.CountAsync();
+            _paginator.Paginate(count, @params);
+            return (List<ProductReview>)reviews;
+        }
+
         public async Task<ProductReview> GetByIdAsync(long productReviewId)
         {
             ProductReview productReview = await _productReviewRepository.GetAsync(productReview => productReview.ProductId == productReviewId);
@@ -67,11 +78,7 @@ namespace ElitaShop.Services.Services.Products
             _productReviewRepository.Update(productReview);
             int result = await _unitOfWork.CommitAsync();
 
-
-
             return result > 0;
         }
-
-
     }
 }
