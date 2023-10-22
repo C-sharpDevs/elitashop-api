@@ -66,7 +66,7 @@ namespace ElitaShop.Services.Services.Categories
 
         public  async Task<List<Category>> GetPageItmesAsync(PaginationParams @params)
         {
-            var categories = await _categoryRepository.GetAllAsync();
+            var categories = await _categoryRepository.GetPageItemsAsync(@params);
             var count = await _categoryRepository.CountAsync();
             _paginator.Paginate(count, @params);
             return (List<Category>)categories;
