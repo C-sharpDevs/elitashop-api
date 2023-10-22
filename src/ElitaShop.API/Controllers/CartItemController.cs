@@ -22,7 +22,7 @@ namespace ElitaShop.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPageItemsAsync([FromForm] int page = 1)
+        public async Task<IActionResult> GetPageItemsAsync([FromQuery] int page = 1)
         {
             var result = await _cartItemService.GetPageItmesAsync(new PaginationParams(page, maxPage));
             return Ok(result);
